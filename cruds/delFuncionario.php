@@ -1,15 +1,14 @@
 <?php
-session_start();
-if(isset($_SESSION[$usuari['idusuari']])) {
+if(!empty($_POST['matricula '])) {
     require '../conne.php';
-    $nome = $_SESSION[$usuari['nome']];
-    $id = $_SESSION[$usuari['idusuari']];
+    $nome = $_POST['nome'];
+    $id = $_POST['matricula'];
 
     $sql= "DELETE FROM usuario WHERE idusuario=:idusuario";
-    $resultado = $conn -> prepare($sql);
-    $resultado -> bindValue(":idusuario", $id);
-    $resultado-> execute();
+    $resultado = $conn->prepare($sql);
+    $resultado->bindValue(":idusuario", $id);
+    $resultado->execute();
 
-    header('Location: ../index.php?nome_usuario= $nome');
+    header('Location: ../index.php?nome_usuario=$nome & delete=ok');
 
 }

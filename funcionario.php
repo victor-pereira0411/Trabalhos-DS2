@@ -175,7 +175,8 @@
                                     echo "
                                     <form action='cruds/delFuncionario.php' method='post'>
                                         <input type='hidden' name='id' value='" .$funcionario['matricula'] . "'>
-                                        <button class='btn btn-danger'>excluir</button>
+                                        <input type='hidden' name='nome' value='" .$funcionario['nome'] . "'>
+                                        <button type='submit' class='btn btn-danger'>excluir</button>
                                     </form>
                                     </td>";
                                     echo "</tr>";
