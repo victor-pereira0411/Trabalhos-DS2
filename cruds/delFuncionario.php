@@ -1,14 +1,16 @@
 <?php
-if(!empty($_POST['matricula '])) {
+session_start();
+if(isset($_GET['matricula'])) {
     require '../conne.php';
-    $nome = $_POST['nome'];
-    $id = $_POST['matricula'];
-
-    $sql= "DELETE FROM usuario WHERE idusuario=:idusuario";
+    $id = $_GET['matricula'];
+    $nome = $_GET['nome'];
+    
+    $sql= "DELETE FROM funcionarios WHERE matricula=:id";
     $resultado = $conn->prepare($sql);
-    $resultado->bindValue(":idusuario", $id);
+    $resultado->bindValue(":id", $id);
     $resultado->execute();
-
-    header('Location: ../index.php?nome_usuario=$nome & delete=ok');
-
+    
+    header("Location: ../funcionario.php?nome_funcionario=$nome&delete=ok");
+    
 }
+var_dump($_GET['matricula']);

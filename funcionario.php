@@ -149,8 +149,21 @@
                                 </div>
                             </div>
                         <?php
+                        } else if (isset($_GET['delete'])) {
+                            $nomefundel= $_GET['nome_funcionario'];
+                        ?>
+
+                        <div class="container">
+                            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                <?php echo $nomefundel ?> deletado com sucesso!
+                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>
+                        </div>
+
+                        <?php
                         }
                         ?>
+
                     </div>
                 </div>
                 <?php
@@ -173,11 +186,11 @@
                                     echo "<td>" . $funcionario['ganhoMilheiro'] . "</td>";
                                     echo "<td>" . "<div class='d-flex flex-row'><button class='btn btn-warning'>editar</button>";
                                     echo "
-                                    <form action='cruds/delFuncionario.php' method='post'>
-                                        <input type='hidden' name='id' value='" .$funcionario['matricula'] . "'>
-                                        <input type='hidden' name='nome' value='" .$funcionario['nome'] . "'>
-                                        <button type='submit' class='btn btn-danger'>excluir</button>
-                                    </form>
+                                    <form action='cruds/delFuncionario.php' method='get'> " .
+                                        "<input type='hidden' name='matricula' value='" . $funcionario['matricula'] . "'>" .
+                                        "<input type='hidden' name='nome' value='" . $funcionario['nome'] . "'>" .
+                                        "<button type='submit' class='btn btn-danger'>excluir</button>" .
+                                        "</form>
                                     </td>";
                                     echo "</tr>";
                                 }
