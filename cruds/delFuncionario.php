@@ -9,8 +9,5 @@ if(isset($_GET['matricula'])) {
     $resultado = $conn->prepare($sql);
     $resultado->bindValue(":id", $id);
     $resultado->execute();
-    
     header("Location: ../funcionario.php?nome_funcionario=$nome&delete=ok");
-    
 }
-var_dump($_GET['matricula']);

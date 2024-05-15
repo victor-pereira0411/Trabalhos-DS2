@@ -142,8 +142,12 @@
                                 <div class="modal-body">
                                     <form class="needs-validation" action="cruds/cadFuncionario.php" method="post">
                                         <div class="mb-3">
-                                            <label for="text" class="form-label">Nome do funcionário</label>
+                                            <label for="text" class="form-label">Matrícula</label>
                                             <input type="text" class="form-control" id="nomfunc" name="nomfunc" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="text" class="form-label">Nome do funcionário</label>
+                                            <input type="text" class="form-control" id="nomfunc" name="nomfunc" value="<?php ?>" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="int" class="form-label">Ganho por milheiro</label>
@@ -201,6 +205,7 @@
                             <th>Ações</th>
                         </thead>
                         <tbody>
+
                             <?php
                             foreach ($funcionarios as $funcionario) {
                                 echo "<tr>";
@@ -212,7 +217,7 @@
                                     <form action='cruds/delFuncionario.php' method='get'> " .
                                     "<input type='hidden' name='matricula' value='" . $funcionario['matricula'] . "'>" .
                                     "<input type='hidden' name='nome' value='" . $funcionario['nome'] . "'>" .
-                                    "<button type='submit' class='btn btn-danger'>excluir</button>" .
+                                    "<button type='submit' class='btn btn-danger' >excluir</button>" .
                                     "</form>
                                     </td>";
                                 echo "</tr>";
@@ -263,6 +268,23 @@
         // Chama a função quando a página carrega e quando a janela é redimensionada
         window.addEventListener('load', removeClassOnSmallScreen);
         window.addEventListener('resize', removeClassOnSmallScreen);
+
+        function edibtn() {
+            Swal.fire({
+                title: "Quer sair da conta?",
+                text: "Você será redirecionado para o login",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Cancelar",
+                confirmButtonText: "Sim, sair da conta"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "cruds/delFuncionario    .php";
+                }
+            });
+        }
     </script>
 </body>
 
