@@ -73,9 +73,6 @@
                                 <label for="password" class="form-label">Senha</label>
                                 <input type="password" class="form-control " id="senha" name="senha" required>
                             </div>
-                            <div class="mb-3 form">
-                                <a class="text-decoration-none" href="cadastro.php">Não possui conta? Registre-se agora</a>
-                            </div>
                             <button type="submit" class="btn btn-primary w-100" name="btn">Entrar</button>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_GET['matricula'])) {
+if(isset($_GET['nome'])) {
+    $idmod = $_GET['id'];
     $nomemod = $_GET['nome'];
-    $idmod = $_GET['matricula'];
-    header("Location: ../funcionario.php?nome_modal=$nomemod&idmod=$idmod");
+    header("Location: ../gerencia.php?nome_modal=$nomemod&id=$idmod");
 }

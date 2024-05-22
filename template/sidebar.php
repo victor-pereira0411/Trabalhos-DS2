@@ -16,34 +16,34 @@
 
 <body>
     <?php
-        session_start();
-        require 'conne.php';
-        if (!isset($_SESSION['id'])) {
-            header('Location: form.php');
-        }
-        $id = $_SESSION['id'];
-        $sql = "SELECT * FROM usuario";
-        $resultado = $conn->prepare($sql);
-        $resultado->execute();
-        $usuario = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    session_start();
+    require 'conne.php';
+    if (!isset($_SESSION['id'])) {
+        header('Location: form.php');
+    }
+    $id = $_SESSION['id'];
+    $sql = "SELECT * FROM usuario";
+    $resultado = $conn->prepare($sql);
+    $resultado->execute();
+    $usuario = $resultado->fetchAll(PDO::FETCH_ASSOC);
     if (isset($_GET['sair'])) {
     ?>
-    <script>
-        Swal.fire({
-            title: "Quer sair da conta?",
-            text: "Você será redirecionado para o login",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            cancelButtonText: "Cancelar",
-            confirmButtonText: "Sim, sair da conta"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "verifica/logout.php";
-            }
-        });
-    </script>
+        <script>
+            Swal.fire({
+                title: "Quer sair da conta?",
+                text: "Você será redirecionado para o login",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Cancelar",
+                confirmButtonText: "Sim, sair da conta"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "verifica/logout.php";
+                }
+            });
+        </script>
     <?php
     }
     ?>
@@ -78,14 +78,15 @@
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Configurações
                         </button>
+                        
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="verifica/logout.php">bgwar</a></li>
-                            <?php 
-                            if($id===1) {
+                            <?php
+                            if ($id === 1) {
                                 echo '
-                            <li><a class="dropdown-item" href="verifica/logout.php">Gerenciar usuários</a></li>
+                            <li><a class="btn" href="../trab_php/gerencia.php">Gerenciar usuários</a></li>
                             ';
-                        }
+                            }
                             ?>
                             <hr class="m-0">
                             <li>
