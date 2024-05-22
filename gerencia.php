@@ -51,22 +51,16 @@
     ?>
         <script>
             (function() {
-                // Verificar se os parâmetros estão definidos antes de usá-los
-                var nomeUsuEdi = "<?php echo isset($_GET['nome_editar']) ? $_GET['nome_editar'] : ''; ?>";
-                var senhaEditar = "<?php echo isset($_GET['senha_editar']) ? $_GET['senha_editar'] : ''; ?>";
-
-                // Verificar se os valores estão vazios antes de exibir no modal
-                if (nomeUsuEdi === '' || senhaEditar === '') {
-                    // Se os valores estiverem vazios, talvez você queira lidar com isso de acordo com a lógica do seu aplicativo
-                    console.error('Os parâmetros nome_editar ou senha_editar não foram passados na URL.');
-                    return;
-                }
+                var nomeUsuEdi = "<?php echo $_GET['nome_editar']?>";
+                var senhaEditar = "<?php echo $_GET['senha_editar'] ?>";
+                var idEditar = "<?php echo $_GET['ideditar']?>";
 
                 Swal.fire({
                     title: "Edite o usuário",
                     html: `
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuário</label>
+                    <input type="hidden" class="form-control" id="ideditar" name="ideditar" value="${idEditar}">
                     <input type="text" class="form-control" id="usuario" name="usuario" value="${nomeUsuEdi}">
                 </div>
                 <div class="mb-3">
@@ -81,14 +75,14 @@
                     preConfirm: () => {
                         const novoNome = document.getElementById('usuario').value;
                         const novaSenha = document.getElementById('senha').value;
-                        return [novoNome, novaSenha, nomeUsuEdi];
+                        const idEditar = document.getElementById('ideditar').value;
+                        return [novoNome, novaSenha, idEditar];
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const [novoNome, novaSenha, nomeEditado] = result.value;
-                        // Atualizei esta parte para redirecionar corretamente
-                        window.location.href = "crudUsuario/updaUsuario.php?nome_editar=" + novoNome + "&senha_editar=" + novaSenha + "&usuarioEditado=" + nomeEditado;
+                        const [novoNome, novaSenha, idEditar] = result.value;
+                        window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
                     }
                 });
             })();
@@ -191,7 +185,7 @@
                                                         echo "<td>" . $user['nome'] . "</td>";
                                                         echo "<td>" . $user['senha'] . "</td>";
                                                         echo "<td>" . "<div class='botaos d-flex flex-row gap-1'><form action='verifica/modaleditar.php' method='get'> " .
-                                                            "<input type='hidden' name='senha' value='" . $user['senha'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
+                                                            "<input type='hidden' name='senha' value='" . $user['senha'] . "'>" . "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
                                                         echo "<form action='verifica/modalexcluir.php' method='get'> " .
                                                             "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-danger' value='excluir'></input>" . "</form></div></td>";
                                                         echo "</tr>";
