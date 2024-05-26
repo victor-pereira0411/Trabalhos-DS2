@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_GET['matricula'])) {
-    require '../conne.php';
+    require '../database/conne.php';
     $nome = $_GET['nome'];
     $id = $_GET['matricula'];
     
@@ -10,5 +10,5 @@ if(isset($_GET['matricula'])) {
     $resultado = $conn->prepare($sql);
     $resultado->bindValue(":id", $id);
     $resultado->execute();
-    header("Location: ../funcionario.php?nome_funcionario=$nome&delete=ok&id=$id");
+    header("Location: ../funcionario.php?nome_funcionario=$nome&delete=ok");
 }

@@ -1,7 +1,7 @@
 <?php 
     if(isset($_GET['ideditar'])) {
         if(isset($_GET['nomeeditar']) & isset($_GET['senhaeditar']) & isset($_GET['ideditar']) & !empty($_GET['nomeeditar']) & !empty($_GET['senhaeditar']) & !empty($_GET['ideditar'])) {
-            require '../conne.php';
+            require '../database/conne.php';
             $idUsuario = $_GET['ideditar'];
             $novoNome = $_GET['nomeeditar'];
             $novaSenha = $_GET['senhaeditar'];
@@ -17,7 +17,7 @@
             $resultado->bindValue("senha", $novaSenha);
             $resultado->bindValue("id", $idUsuario);
             $resultado->execute();
-            header("Location: ../gerencia.php?editou=ok&nomeUsuario=$novoNome");
+            header("Location: ../index.php?editou=ok&nomeUsuario=$novoNome");
         // }
         // else {
         //     header('Location: ../gerencia.php?sucesso=jatem');

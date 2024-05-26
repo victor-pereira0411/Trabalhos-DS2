@@ -10,7 +10,7 @@
 
 <body>
     <?php
-    require 'conne.php';
+    require 'database/conne.php';
     $sql = "SELECT * FROM producao";
     $resultado = $conn->prepare($sql);
     $resultado->execute();
@@ -140,7 +140,7 @@
                             echo "<td>" . $p['milheirosProduzidos'] . "</td>";
                             echo " <td>
                                 <div class='botaos d-flex flex-row gap-1'>
-                                <form action='cruds/delFuncionario.php' method='get'> " .
+                                <form action='' method='get'> " .
                                 "<input type='hidden' name='matricula' value='" . $p['idproducao'] . "'>" .
                                 "<input type='hidden' name='nome' value='" . $p['dataProducao'] . "'>" .
                                 "<input type='submit' class='btn btn-danger' value='excluir'></input>" .

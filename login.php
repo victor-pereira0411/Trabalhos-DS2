@@ -7,23 +7,7 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        .alerta {
-            width: 13rem;
-            padding-bottom: 0;
-        }
-
-        .alerta p {
-            font-size: 12px;
-        }
-
-        .mensagem {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
@@ -32,12 +16,7 @@
         <div class="justify-content-center d-flex ">
             <?php
             if (isset($_GET['entrou'])) {
-                if ($_GET['entrou'] == "ok") {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>    
-                        Usuário cadastrado com sucesso
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                        </div>";
-                } elseif ($_GET['entrou'] == "errado") {
+                if ($_GET['entrou'] == "errado") {
                     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                         Usuário ou senha incorreto
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
@@ -65,11 +44,11 @@
                             </div>
                         </div>
                         <form action="verifica/login.php" method="post" data-parsley-validate>
-                            <div class="mb-3">
+                            <div class="pb-3">
                                 <label for="text" class="form-label">Usuário</label>
                                 <input type="text" class="form-control" id="usuario" name="usuario" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="pb-3">
                                 <label for="password" class="form-label">Senha</label>
                                 <input type="password" class="form-control " id="senha" name="senha" required>
                             </div>

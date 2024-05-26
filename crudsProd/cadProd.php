@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST['btnfunc'])) {
         if(isset($_POST['datProd']) & isset($_POST['milhProd']) & !empty($_POST['datProd']) & !empty($_POST['milhProd'])) {
-            require '../conne.php';
+            require '../database/conne.php';
             $dataProd = $_POST['datProd'];
             $milheProd = $_POST['milhProd'];
             $sql= "INSERT INTO producao(dataProducao, milheirosProduzidos) VALUES(:dataProducao, :milheirosProduzidos)";

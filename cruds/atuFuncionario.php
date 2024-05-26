@@ -1,6 +1,6 @@
 <?php 
 if(isset($_GET['matricula'])) {
-    require '../conne.php';
+    require '../database/conne.php';
     $ganho = $_GET['ganho'];
     $nome = $_GET['nome'];
     $id = $_GET['matricula'];

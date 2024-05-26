@@ -6,14 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        @media(max-width: 767px) {
+            .botaos {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <?php
     session_start();
-    require 'conne.php';
+    require 'database/conne.php';
     if (!isset($_SESSION['id'])) {
         header('Location: form.php');
     }
@@ -22,7 +29,7 @@
     $resultado = $conn->prepare($sql);
     $resultado->execute();
     $usuario = $resultado->fetchAll(PDO::FETCH_ASSOC);
-    if (isset($_GET['id'])) {
+    if (isset($_GET['idExcUsu'])) {
         $nomeUsu = $_GET['nome_modal'];
         $idmod = $_GET['id'];
     ?>
@@ -51,9 +58,9 @@
     ?>
         <script>
             (function() {
-                var nomeUsuEdi = "<?php echo $_GET['nome_editar']?>";
+                var nomeUsuEdi = "<?php echo $_GET['nome_editar'] ?>";
                 var senhaEditar = "<?php echo $_GET['senha_editar'] ?>";
-                var idEditar = "<?php echo $_GET['ideditar']?>";
+                var idEditar = "<?php echo $_GET['ideditar'] ?>";
 
                 Swal.fire({
                     title: "Edite o usuário",
@@ -83,6 +90,8 @@
                     if (result.isConfirmed) {
                         const [novoNome, novaSenha, idEditar] = result.value;
                         window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
+                    } else {
+
                     }
                 });
             })();
@@ -93,10 +102,10 @@
     ?>
 
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div  class="row justify-content-center">
             <div class="col-md-6 col-lg-4 w-75 ">
                 <div class="card">
-                    <div class="card-body ">
+                    <div  class="card-body ">
                         <div class="d-flex flex-direction-row justify-content-between align-items-center">
                             <div class="px-2 pt-3 pb-4 d-flex justify-content-start">
                                 <h1 class="fs-3">Gerenciar usuários</h1>
@@ -159,32 +168,43 @@
                             </div>
 
                         <?php
+                        } else if (isset($_GET['editou'])) {
+                            $nomeUsuario = $_GET['nomeUsuario'];
+                        ?>
+
+                            <div class="container">
+                                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                    <?php echo $nomeUsuario ?> atualizado com sucesso!
+                                    <a href="gerencia.php" class="btn btn-close"></a>
+                                </div>
+                            </div>
+
+                        <?php
                         }
                         ?>
 
-                        <div>
+                        <div class="d-flex justify-content-center">
                             <?php
                             if (count($usuario) > 0) {
                             ?>
-                                <div class="">
-                                    <div class="table-responsive m-4 d-flex justify-content-center align-items-center">
-                                        <table class="table table-hover table-sm">
+                                <!-- <div class="m-4 d-flex justify-content-center align-items-center overflow-x-auto"> -->
+                                    <div style="width: 800px;" class="table-responsive">
+                                        <table class="table table-bordered table-hover text-center table-md">
                                             <thead>
-                                                <th scope="col">id</th>
-                                                <th scope="col">nome</th>
-                                                <th scope="col">senha</th>
-                                                <th scope="col">ações</th>
+                                                <th style="width: 20px;" scope="col" id="1">id</th>
+                                                <th style="width: 70px;" scope="col" id="2">nome</th>
+                                                <th style="width: 70px;" scope="col" id="3">senha</th>
+                                                <th class="w-fit-content" style="width: 20px;" scope="col" id="4">ações</th>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 foreach ($usuario as $user) {
-                                                    // Verifica se o nome do usuário é igual a "Usuário a ser excluído"
                                                     if ($user['nome'] != 'admin') {
-                                                        echo "<tr scope='row'>";
-                                                        echo "<td>" . $user['idusuario'] . "</td>";
-                                                        echo "<td>" . $user['nome'] . "</td>";
-                                                        echo "<td>" . $user['senha'] . "</td>";
-                                                        echo "<td>" . "<div class='botaos d-flex flex-row gap-1'><form action='verifica/modaleditar.php' method='get'> " .
+                                                        echo "<tr>";
+                                                        echo "<td headers='1'>" . $user['idusuario'] . "</td>";
+                                                        echo "<td headers='2'>" . $user['nome'] . "</td>";
+                                                        echo "<td headers='3'>" . $user['senha'] . "</td>";
+                                                        echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='verifica/modaleditar.php' method='get'> " .
                                                             "<input type='hidden' name='senha' value='" . $user['senha'] . "'>" . "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
                                                         echo "<form action='verifica/modalexcluir.php' method='get'> " .
                                                             "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-danger' value='excluir'></input>" . "</form></div></td>";
@@ -195,12 +215,12 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             <?php } else {
                                 echo "<div class='d-flex justify-content-center mt-5'>
-                    <h4 class=''>Você não possui funcionários cadastrados</h4>
-                    </div>
-                    ";
+                            <h4 class=''>Você não possui funcionários cadastrados</h4>
+                            </div>
+                            ";
                             }
                             ?>
                         </div>
@@ -209,10 +229,8 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
+    
 </body>
 
 </html>

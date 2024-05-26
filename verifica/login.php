@@ -2,7 +2,7 @@
     if(isset($_POST['btn'])) {
         if(isset($_POST['usuario']) & isset($_POST['senha']) & !empty($_POST['usuario']) & !empty($_POST['senha'])) {
             session_start();
-            require '../conne.php';
+            require '../database/conne.php';
             $login = $_POST['usuario'];
             $senha = $_POST['senha'];
             $sql = "SELECT * FROM usuario WHERE nome = :nome AND senha= :senha";
@@ -17,16 +17,16 @@
                 header('Location: ../index.php');
             }
             else {
-                header('Location: ../form.php?entrou=errado');
+                header('Location: ../login.php?entrou=errado');
             }
 
         }
         else{
-            header('Location: ../form.php?entrou=nao');
+            header('Location: ../login.php?entrou=nao');
         }
     } 
     else {
-        header('Location: ../form.php');
+        header('Location: ../login.php');
     }
 
     

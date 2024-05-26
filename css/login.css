@@ -1,0 +1,15 @@
+.alerta {
+    width: 13rem;
+    padding-bottom: 0;
+}
+
+.alerta p {
+    font-size: 12px;
+}
+
+.mensagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
