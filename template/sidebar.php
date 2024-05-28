@@ -28,6 +28,7 @@
     if (isset($_GET['sair'])) {
     ?>
         <script>
+            var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
             Swal.fire({
                 title: "Quer sair da conta?",
                 text: "Você será redirecionado para o login",
@@ -40,16 +41,19 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "verifica/logout.php";
+                } else {
+                    window.location.href = url;
                 }
             });
         </script>
     <?php
     }
-    if (isset($_GET['idExcUsu'])) {
+    if (isset($_GET['idExcUsuPerg'])) {
         $nomeUsu = $_GET['nome_modal'];
-        $idmod = $_GET['idExcUsu'];
+        $idmod = $_GET['idExcUsuPerg'];
     ?>
         <script>
+            var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
             (function() {
                 Swal.fire({
                     title: "Quer mesmo excluir esse usuário?",
@@ -63,6 +67,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = "crudUsuario/delUsuario.php?nome_modal=<?php echo $nomeUsu ?>&id=<?php echo $idmod ?>";
+                    } else {
+                        window.location.href = url;
                     }
                 });
             })();
@@ -77,6 +83,7 @@
                 var nomeUsuEdi = "<?php echo $_GET['nome_editar'] ?>";
                 var senhaEditar = "<?php echo $_GET['senha_editar'] ?>";
                 var idEditar = "<?php echo $_GET['ideditar'] ?>";
+                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
 
                 Swal.fire({
                     title: "Edite o usuário",
@@ -107,7 +114,7 @@
                         const [novoNome, novaSenha, idEditar] = result.value;
                         window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
                     } else {
-
+                        window.location.href = url;
                     }
                 });
             })();
@@ -115,6 +122,53 @@
 
     <?php
     }
+    if (isset($_GET['sucesso'])) {
+    ?>
+        <script>
+            var novaUrl = "index.php";
+            Swal.fire({
+                title: "Usuário adicionado com sucesso!",
+                text: "O usuário foi inserido no sistema!",
+                icon: "success",
+                willClose: () => {
+                    window.location.replace(novaUrl);
+                }
+            });
+        </script>
+    <?php
+    }
+    if (isset($_GET['delete'])) {
+    ?>
+        <script>
+            var novaUrl = "index.php";
+            Swal.fire({
+                title: "Usuário deletado com sucesso!",
+                text: "O usuário foi excluido do sistema!",
+                icon: "success",
+                willClose: () => {
+                    window.location.replace(novaUrl);
+                }
+            });
+        </script>
+    <?php
+    }
+    if (isset($_GET['editou'])) {
+    ?>
+        <script>
+            var novaUrl = "index.php";
+            Swal.fire({
+                title: "Usuário atualizado com sucesso!",
+                text: "O usuário foi atualizado no sistema!",
+                icon: "success",
+                willClose: () => {
+                    window.location.replace(novaUrl);
+                }
+            });
+        </script>
+
+    <?php
+    }
+
     ?>
     <div class="main-container d-flex">
         <div class="sidebar" id="side_nav">
@@ -153,9 +207,11 @@
                             <?php
                             if ($id === 1) {
                                 echo '
-                            <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalgerenciar">
-                            adicionar
-                        </button></li>
+                            <li>
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalgerenciar">
+                            Gerenciar usuários
+                        </button>
+                        </li>
                             ';
                             }
                             ?>
@@ -210,55 +266,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php
-                                            if (isset($_GET['sucesso'])) {
-                                                $nomeUsu = $_GET['nomeUsu'];
-                                            ?>
-                                                <div class="container">
-                                                    <div class='alert alert-success alert-dismissible fade show d-flex flex-row align-items-center' role='alert'>
-                                                        <div>
-                                                        <p><?php echo $nomeUsu ?> cadastrado com sucesso!</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center ">
-                                                        <a href="gerencia.php" class="btn btn-close"></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php
-                                            } else if (isset($_GET['delete'])) {
-                                                $nomeUsuDel = $_GET['nome_usuario'];
-                                            ?>
-
-                                                <div class="container">
-                                                    <div class='alert alert-danger alert-dismissible fade show d-flex flex-row align-items-center' role='alert'>
-                                                        <p><?php echo $nomeUsuDel ?> deletado com sucesso!</p>
-                                                        <a href="gerencia.php" class="btn btn-close"></a>
-                                                    </div>
-                                                </div>
-
-                                            <?php
-                                            } else if (isset($_GET['editou'])) {
-                                                $nomeUsuario = $_GET['nomeUsuario'];
-                                            ?>
-
-                                                <div class="container">
-                                                    <div class='alert alert-success alert-dismissible fade show d-flex flex-row align-items-center' role='alert'>
-                                                        <p><?php echo $nomeUsuario ?> atualizado com sucesso!</p>
-                                                        <a href="gerencia.php" class="btn btn-close"></a>
-                                                    </div>
-                                                </div>
-
-                                            <?php
-                                            }
-                                            ?>
 
                                             <div class="d-flex justify-content-center">
                                                 <?php
                                                 if (count($usuario) > 0) {
                                                 ?>
-                                                    <!-- <div class="m-4 d-flex justify-content-center align-items-center overflow-x-auto"> -->
                                                     <div class="table-responsive">
-                                                        <table style="width: 400px;" class="table table-bordered table-hover text-center table-md">
+                                                        <table class="table table-bordered table-hover text-center table-sm">
                                                             <thead>
                                                                 <th scope="col" id="1">id</th>
                                                                 <th scope="col" id="2">nome</th>
@@ -273,9 +287,9 @@
                                                                         echo "<td headers='1'>" . $user['idusuario'] . "</td>";
                                                                         echo "<td headers='2'>" . $user['nome'] . "</td>";
                                                                         echo "<td headers='3'>" . $user['senha'] . "</td>";
-                                                                        echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='verifica/modalEditar.php' method='get'> " .
+                                                                        echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='modalUsuario/modalEditar.php' method='get'> " .
                                                                             "<input type='hidden' name='senha' value='" . $user['senha'] . "'>" . "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
-                                                                        echo "<form action='verifica/modalExcluir.php' method='get'> " .
+                                                                        echo "<form action='modalUsuario/modalExcluir.php' method='get'> " .
                                                                             "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-danger' value='excluir'></input>" . "</form></div></td>";
                                                                         echo "</tr>";
                                                                     }
@@ -284,10 +298,9 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <!-- </div> -->
                                                 <?php } else {
                                                     echo "<div class='d-flex justify-content-center mt-5'>
-                            <h4 class=''>Você não possui funcionários cadastrados</h4>
+                            <h4 class=''>Você não possui usuários cadastrados</h4>
                             </div>
                             ";
                                                 }
@@ -301,30 +314,20 @@
                     </div>
             </nav>
             <script>
-                // Obtém a barra lateral
                 var sidebar = document.getElementById("side_nav");
-
-                // Adiciona um listener para o evento de scroll da janela
                 window.addEventListener("scroll", function() {
-                    // Define a margem superior da barra lateral para a posição atual do scroll
                     sidebar.style.top = window.pageYOffset + "px";
                 });
-                // Função para remover a classe do Bootstrap quando a tela for menor que 768px
                 function removeClassOnSmallScreen() {
                     const screenWidth = window.innerWidth;
-                    const element = document.querySelector('.nav'); // Elemento Bootstrap com a classe a ser removida
+                    const element = document.querySelector('.nav'); 
 
-                    // Verifica se a largura da tela é menor que 768px (padrão para tablets e dispositivos menores)
                     if (screenWidth < 768) {
-                        // Remove a classe do Bootstrap
                         element.classList.remove('justify-content-end');
                     } else {
-                        // Adiciona a classe do Bootstrap se a largura da tela for maior ou igual a 768px
                         element.classList.add('justify-content-end');
                     }
                 }
-
-                // Chama a função quando a página carrega e quando a janela é redimensionada
                 window.addEventListener('load', removeClassOnSmallScreen);
                 window.addEventListener('resize', removeClassOnSmallScreen);
             </script>

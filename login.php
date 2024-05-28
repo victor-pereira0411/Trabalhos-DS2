@@ -22,7 +22,7 @@
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>";
                 } elseif ($_GET['entrou'] == "nao") {
-                    echo "<div class='alert alert-sucess alert-dismissible fade show' role='alert'>
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                         Preencha todos os campos
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>";

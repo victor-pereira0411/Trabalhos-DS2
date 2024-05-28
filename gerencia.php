@@ -115,7 +115,6 @@
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
                                         adicionar
                                     </button>
-                                    <!-- Modal -->
                                     <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -187,7 +186,6 @@
                             <?php
                             if (count($usuario) > 0) {
                             ?>
-                                <!-- <div class="m-4 d-flex justify-content-center align-items-center overflow-x-auto"> -->
                                     <div style="width: 800px;" class="table-responsive">
                                         <table class="table table-bordered table-hover text-center table-md">
                                             <thead>
@@ -215,7 +213,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                <!-- </div> -->
                             <?php } else {
                                 echo "<div class='d-flex justify-content-center mt-5'>
                             <h4 class=''>Você não possui funcionários cadastrados</h4>

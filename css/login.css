@@ -13,3 +13,10 @@
     justify-content: center;
     width: 100%;
 }
+@media(max-width: 767px){
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
