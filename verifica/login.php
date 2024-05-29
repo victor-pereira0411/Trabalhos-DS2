@@ -13,7 +13,7 @@
 
             if($resultado ->rowCount() > 0) {
                 $dado = $resultado -> fetch();
-                $_SESSION['id'] = $dado['idusuario'];
+                $_SESSION["id"] = $dado['idusuario'];
                 header('Location: ../index.php');
             }
             else {

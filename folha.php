@@ -10,6 +10,7 @@
 
 <body>
     <?php
+    
     require 'template/sidebar.php';
     ?>
     <div class="dashboard-content px-3 pt-4">

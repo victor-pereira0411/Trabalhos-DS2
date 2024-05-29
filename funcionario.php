@@ -18,6 +18,7 @@
 
 <body>
     <?php
+    
     require 'database/conne.php';
     $sql = "SELECT * FROM funcionarios";
     $resultado = $conn->prepare($sql);

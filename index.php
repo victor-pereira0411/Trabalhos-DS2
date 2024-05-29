@@ -11,6 +11,7 @@
 
 <body>
     <?php
+    
     require 'template/sidebar.php';
     ?>
 

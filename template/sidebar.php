@@ -203,7 +203,6 @@
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="verifica/logout.php">bgwar</a></li>
                             <?php
                             if ($id === 1) {
                                 echo '
@@ -228,37 +227,42 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <div class="card-body ">
-                                            <div class="d-flex flex-direction-row justify-content-between align-items-center">
-                                                <div class="px-2 pt-3 pb-4 d-flex justify-content-start">
-                                                    <h1 class="fs-3">Gerenciar usuários</h1>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div>
+                                                <div class="d-flex flex-direction-row justify-content-between align-items-center">
+                                                    <div class="px-2 pt-3 pb-4 d-flex justify-content-start">
+                                                        <h1 class="fs-3">Gerenciar usuários</h1>
+                                                    </div>
                                                     <div>
-                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                                                            adicionar
-                                                        </button>
-                                                        <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastrar usuário</h1>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form class="needs-validation" action="crudUsuario/cadUsuario.php" method="post">
-                                                                            <div class="mb-3">
-                                                                                <label for="text" class="form-label">Nome do usuário</label>
-                                                                                <input type="text" class="form-control" id="nomUsu" name="nomUsu" required>
-                                                                            </div>
-                                                                            <div class="mb-3">
-                                                                                <label for="int" class="form-label">Senha</label>
-                                                                                <input type="int" class="form-control" id="senha" name="senha" required>
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                                        <input type="submit" class="btn btn-primary" name="btnUsu" value="Cadastrar"></input>
-                                                                        </form>
+                                                        <div>
+                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
+                                                                adicionar
+                                                            </button>
+                                                            <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastrar usuário</h1>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form class="needs-validation" action="crudUsuario/cadUsuario.php" method="post">
+                                                                                <div class="mb-3">
+                                                                                    <label for="text" class="form-label">Nome do usuário</label>
+                                                                                    <input type="text" class="form-control" id="nomUsu" name="nomUsu" required>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label for="int" class="form-label">Senha</label>
+                                                                                    <input type="int" class="form-control" id="senha" name="senha" required>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                            <input type="submit" class="btn btn-primary" name="btnUsu" value="Cadastrar"></input>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -266,7 +270,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="d-flex justify-content-center">
                                                 <?php
                                                 if (count($usuario) > 0) {
@@ -318,9 +321,10 @@
                 window.addEventListener("scroll", function() {
                     sidebar.style.top = window.pageYOffset + "px";
                 });
+
                 function removeClassOnSmallScreen() {
                     const screenWidth = window.innerWidth;
-                    const element = document.querySelector('.nav'); 
+                    const element = document.querySelector('.nav');
 
                     if (screenWidth < 768) {
                         element.classList.remove('justify-content-end');
