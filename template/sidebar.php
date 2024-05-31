@@ -37,7 +37,8 @@
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 cancelButtonText: "Cancelar",
-                confirmButtonText: "Sim, sair da conta"
+                confirmButtonText: "Sim, sair da conta",
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "verifica/logout.php";
@@ -63,7 +64,8 @@
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
                     cancelButtonText: "Cancelar",
-                    confirmButtonText: "Sim, excluir usuário!"
+                    confirmButtonText: "Sim, excluir usuário!",
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = "crudUsuario/delUsuario.php?nome_modal=<?php echo $nomeUsu ?>&id=<?php echo $idmod ?>";
@@ -102,6 +104,7 @@
                     confirmButtonText: "Atualizar",
                     cancelButtonText: "Cancelar",
                     showLoaderOnConfirm: true,
+                    reverseButtons: true,
                     preConfirm: () => {
                         const novoNome = document.getElementById('usuario').value;
                         const novaSenha = document.getElementById('senha').value;
@@ -110,16 +113,55 @@
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
-                    if (result.isConfirmed) {
+                    // if (result.isConfirmed) {
                         const [novoNome, novaSenha, idEditar] = result.value;
                         window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
+                    // } else {
+                    //     window.location.href = url;
+                    // }
+                });
+            })();
+        </script>
+    <?php
+    }
+    if (isset($_GET['cadastrarUser'])) {
+    ?>
+        <script>
+            (function() {
+
+                Swal.fire({
+                    title: "Cadastrar usuário",
+                    html: `
+                <div class="mb-3">
+                    <label for="usuario" class="form-label">Usuário</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario">
+                </div>
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="text" class="form-control" id="senha" name="senha">
+                </div>
+            `,
+                    showCancelButton: true,
+                    confirmButtonText: "Cadastrar",
+                    cancelButtonText: "Cancelar",
+                    showLoaderOnConfirm: true,
+                    reverseButtons: true,
+                    preConfirm: () => {
+                        const Nome = document.getElementById('usuario').value;
+                        const Senha = document.getElementById('senha').value;
+                        return [Nome, Senha];
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const [Nome, Senha] = result.value;
+                        window.location.href = "crudUsuario/cadUsuario.php?nomUsu=" + Nome + "&senha=" + Senha + "&cadastraUsuario=ok";
                     } else {
                         window.location.href = url;
                     }
                 });
             })();
         </script>
-
     <?php
     }
     if (isset($_GET['sucesso'])) {
@@ -130,6 +172,7 @@
                 title: "Usuário adicionado com sucesso!",
                 text: "O usuário foi inserido no sistema!",
                 icon: "success",
+                reverseButtons: true,
                 willClose: () => {
                     window.location.replace(novaUrl);
                 }
@@ -145,6 +188,7 @@
                 title: "Usuário deletado com sucesso!",
                 text: "O usuário foi excluido do sistema!",
                 icon: "success",
+                reverseButtons: true,
                 willClose: () => {
                     window.location.replace(novaUrl);
                 }
@@ -160,6 +204,7 @@
                 title: "Usuário atualizado com sucesso!",
                 text: "O usuário foi atualizado no sistema!",
                 icon: "success",
+                reverseButtons: true,
                 willClose: () => {
                     window.location.replace(novaUrl);
                 }
@@ -223,49 +268,25 @@
                             </li>
                         </ul>
                         <div class="modal fade" id="modalgerenciar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-md">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <div class="card-body ">
-                                            <div class="d-flex flex-column">
+                                        <div class="card-body">
+                                            <div>
                                                 <div class="d-flex justify-content-end">
                                                     <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="d-flex flex-direction-row justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center justify-content-between">
                                                     <div class="px-2 pt-3 pb-4 d-flex justify-content-start">
-                                                        <h1 class="fs-3">Gerenciar usuários</h1>
+                                                        <h1 class="fs-3 wrap">Gerenciar usuários</h1>
                                                     </div>
                                                     <div>
                                                         <div>
-                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                                                                adicionar
-                                                            </button>
-                                                            <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastrar usuário</h1>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form class="needs-validation" action="crudUsuario/cadUsuario.php" method="post">
-                                                                                <div class="mb-3">
-                                                                                    <label for="text" class="form-label">Nome do usuário</label>
-                                                                                    <input type="text" class="form-control" id="nomUsu" name="nomUsu" required>
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <label for="int" class="form-label">Senha</label>
-                                                                                    <input type="int" class="form-control" id="senha" name="senha" required>
-                                                                                </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                                            <input type="submit" class="btn btn-primary" name="btnUsu" value="Cadastrar"></input>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <form action="modalUsuario/modalCadastrar.php" method="get">
+                                                                <input type="hidden" value="cadastro" name="adicionaUser">
+                                                                <input class="btn btn-primary" type="submit" value="Adicionar">
+                                                            </form>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,8 +295,8 @@
                                                 <?php
                                                 if (count($usuario) > 0) {
                                                 ?>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered table-hover text-center table-sm">
+                                                    <div class="">
+                                                        <table class="table table-bordered table-hover text-center table-lg">
                                                             <thead>
                                                                 <th scope="col" id="1">id</th>
                                                                 <th scope="col" id="2">nome</th>

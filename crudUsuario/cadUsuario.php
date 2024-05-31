@@ -1,9 +1,9 @@
 <?php 
-    if(isset($_POST['btnUsu'])) {
-        if(isset($_POST['nomUsu']) & isset($_POST['senha']) & !empty($_POST['nomUsu']) & !empty($_POST['senha'])) {
+    if(isset($_GET['cadastraUsuario'])) {
+        if(isset($_GET['nomUsu']) & isset($_GET['senha']) & !empty($_GET['nomUsu']) & !empty($_GET['senha'])) {
             require '../database/conne.php';
-            $login = $_POST['nomUsu'];
-            $senha = $_POST['senha'];
+            $login = $_GET['nomUsu'];
+            $senha = $_GET['senha'];
             $sql = "SELECT * FROM usuario WHERE nome = :nome";
             $resultado= $conn->prepare($sql);
             $resultado->bindValue("nome", $login);

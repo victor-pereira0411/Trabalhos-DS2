@@ -10,6 +10,6 @@ if(isset($_POST['btnfunc'])) {
             $resultado -> bindValue(":ganhoMilheiro", $ganhoFunc);
             $resultado -> execute();
 
-            header("Location:../funcionario.php?nome_funcionario=$nomeFunc&sucesso=ok");
+            header("Location:../funcionario.php?nomeFunCad=$nomeFunc&funCadas=ok");
         }
     }
