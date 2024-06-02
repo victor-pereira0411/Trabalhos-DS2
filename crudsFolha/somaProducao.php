@@ -5,11 +5,10 @@ if (isset($_GET['btnProd'])) {
     $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
     $resultado = $conn->prepare($sql);
     $resultado->execute();
-    $quantProd = $resultado->fetchColumn();
+    $quantProdSoma = $resultado->fetchColumn();
     
-    $quantProdEncoded = urlencode($quantProd);
+    $quantProd = urlencode($quantProdSoma);
 
-    header("Location: apagarProducao.php?quantProd=$quantProdEncoded");
-    exit();
+    header("Location: apagarProducao.php?quantProd=$quantProd");
 }
 ?>

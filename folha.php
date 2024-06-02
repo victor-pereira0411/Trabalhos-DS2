@@ -10,14 +10,52 @@
 
 <body>
     <?php
-    
     require 'template/sidebar.php';
+    $sqlFolha = "SELECT * FROM folhapagamento";
+    $resultadoFolha = $conn->prepare($sqlFolha);
+    $resultadoFolha->execute();
+    $folhaPagamentos = $resultadoFolha->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="dashboard-content px-3 pt-4">
-        <h2 class="fs-5"> Dashboard</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, totam? Sequi alias eveniet ut quas
-            ullam delectus et quasi incidunt rem deserunt asperiores reiciendis assumenda doloremque provident,
-            dolores aspernatur neque.</p>
+        <div>
+        </div>
+    </div>
+    <?php
+    if (count($folhaPagamentos) > 0) {
+    ?>
+        <div class="">
+            <div class="table-responsive m-4 d-flex justify-content-center align-items-center">
+                <table class="table table-hover table-sm text-center">
+                    <thead>
+                        <th scope="col">Nome do funcionário</th>
+                        <th scope="col">Valor do milheiro</th>
+                        <th scope="col">Milheiros Produzidos</th>
+                        <th scope="col">Salário</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($folhaPagamentos as $folhaPagamento) {
+                            echo "<tr scope='row'>";
+                            echo "<td>" . $folhaPagamento['funcionarios_matricula'] . "</td>";
+                            echo "<td>" . $folhaPagamento['valorMilheiro'] . " reais" . "</td>";
+                            echo "<td>" . $folhaPagamento['milheirosProduzidos'] . " milheiros" . "</td>";
+                            echo "<td>" . $folhaPagamento['salario'] . " reais" . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php } else {
+        echo "<div class='d-flex justify-content-center mt-5'>
+                    <h4 class=''>Você não possui folhas de pagamentos pendentes!</h4>
+                    </div>
+                    ";
+    }
+    ?>
+    </div>
     </div>
     </div>
     </div>
@@ -35,9 +73,10 @@
         $(".close-btn").on("click", function() {
             $(".sidebar").removeClass("active");
         });
+
         function removeClassOnSmallScreen() {
             const screenWidth = window.innerWidth;
-            const element = document.querySelector('.nav'); 
+            const element = document.querySelector('.nav');
 
             if (screenWidth < 768) {
                 element.classList.remove('justify-content-end');

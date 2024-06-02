@@ -94,7 +94,6 @@
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
             <h2>Produção</h2>
-            <!-- Button trigger modal -->
             <div class="d-flex flex-direction-row gap-3">
                 <form action="crudsFolha/somaproducao.php" method="get">
                     <input type="hidden" value="<?php $producao ?>" name="quantProd">
@@ -106,7 +105,6 @@
                     adicionar
                 </button>
             </div>
-            <!-- Modal -->
             <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">

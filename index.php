@@ -11,38 +11,57 @@
 
 <body>
     <?php
-    
     require 'template/sidebar.php';
     ?>
 
 
     <div class="dashboard-content px-3 pt-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Funcionários</h5>
-                        <p class="card-text">Gerencie os funcionários da produção.</p>
-                        <a href="#" class="btn btn-primary">Ver mais</a>
-                    </div>
+        <div class="row d-flex justify-content-center gap-4">
+            <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                    <h5 class="card-title fs-4">Funcionários:</h5>
+                    <p class="fs-5">
+                        <?php
+                        $sql = 'SELECT COUNT(matricula) AS quantFunc FROM funcionarios';
+                        $resultado = $conn->prepare($sql);
+                        $resultado->execute();
+                        $quantFunc = $resultado->fetchColumn();
+                        echo $quantFunc . " funcionários";
+                        ?>
+                    </p>
+                    <a href="#" class="btn btn-primary">Ver mais</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Produção</h5>
-                        <p class="card-text">Gerencie a produção.</p>
-                        <a href="#" class="btn btn-primary">Ver mais</a>
+            <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                    <div class="d-flex flex-column">
+                    <h5 class="card-title fs-4">Produção:</h5>
+                    <p class="fs-5">
+                        <?php
+                        $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
+                        $resultado = $conn->prepare($sql);
+                        $resultado->execute();
+                        $quantProd = $resultado->fetchColumn();
+                        echo $quantProd . " milheiros";
+                        ?>
+                    </p>
                     </div>
+                    <a href="#" class="btn btn-primary">Ver mais</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Folha de pagamento</h5>
-                        <p class="card-text">Acesse a folha de pagamento da produção.</p>
-                        <a href="#" class="btn btn-primary">Ver mais</a>
-                    </div>
+            <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                    <h5 class="card-title fs-4">Folha de pagamento:</h5>
+                    <p class="fs-5">
+                        <?php
+                        $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
+                        $resultado = $conn->prepare($sql);
+                        $resultado->execute();
+                        $quantProd = $resultado->fetchColumn();
+                        echo $quantProd . " milheiros";
+                        ?>
+                    </p>
+                    <a href="#" class="btn btn-primary">Ver mais</a>
                 </div>
             </div>
         </div>
@@ -179,6 +198,7 @@
         $(".close-btn").on("click", function() {
             $(".sidebar").removeClass("active");
         });
+
         function removeClassOnSmallScreen() {
             const screenWidth = window.innerWidth;
             const element = document.querySelector('.nav');
