@@ -11,21 +11,26 @@
 <body>
     <?php
     require 'template/sidebar.php';
-    $sqlFolha = "SELECT * FROM folhapagamento";
+    $sqlFolha = "SELECT folha.salario, f.nome, folha.milheirosProduzidos, folha.funcionarios_matricula, folha.valorMilheiro FROM folhapagamento AS folha JOIN funcionarios AS f ON folha.funcionarios_matricula = f.matricula";
     $resultadoFolha = $conn->prepare($sqlFolha);
     $resultadoFolha->execute();
     $folhaPagamentos = $resultadoFolha->fetchAll(PDO::FETCH_ASSOC);
+
     ?>
     <div class="dashboard-content px-3 pt-4">
-        <div>
+        <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
+            <h2>Funcionários</h2>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
+                Finalizar pagamento
+            </button>
         </div>
     </div>
     <?php
     if (count($folhaPagamentos) > 0) {
     ?>
-        <div class="">
-            <div class="table-responsive m-4 d-flex justify-content-center align-items-center">
-                <table class="table table-hover table-sm text-center">
+        <div class="m-4 d-flex justify-content-center align-items-center">
+            <div class="table-responsive">
+                <table class="table table-hover table-lg text-center fs-5">
                     <thead>
                         <th scope="col">Nome do funcionário</th>
                         <th scope="col">Valor do milheiro</th>
@@ -36,7 +41,7 @@
                         <?php
                         foreach ($folhaPagamentos as $folhaPagamento) {
                             echo "<tr scope='row'>";
-                            echo "<td>" . $folhaPagamento['funcionarios_matricula'] . "</td>";
+                            echo "<td>" . $folhaPagamento['nome'] . "</td>";
                             echo "<td>" . $folhaPagamento['valorMilheiro'] . " reais" . "</td>";
                             echo "<td>" . $folhaPagamento['milheirosProduzidos'] . " milheiros" . "</td>";
                             echo "<td>" . $folhaPagamento['salario'] . " reais" . "</td>";

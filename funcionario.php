@@ -103,11 +103,9 @@
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between flex-column ">
             <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
                 <h2>Funcionários</h2>
-                <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
                     adicionar
                 </button>
-                <!-- Modal -->
                 <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

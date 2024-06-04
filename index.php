@@ -26,162 +26,65 @@
                         $resultado = $conn->prepare($sql);
                         $resultado->execute();
                         $quantFunc = $resultado->fetchColumn();
-                        echo $quantFunc . " funcionários";
+                        if ($quantFunc > 0) {
+                            echo $quantFunc . " funcionários";
+                        } else {
+                            echo "Sem funcionários";
+                        }
                         ?>
                     </p>
-                    <a href="#" class="btn btn-primary">Ver mais</a>
+                    <a href="funcionario.php" class="btn btn-primary">Veja mais</a>
                 </div>
             </div>
             <div class="card" style="width: 20rem;">
                 <div class="card-body">
                     <div class="d-flex flex-column">
-                    <h5 class="card-title fs-4">Produção:</h5>
-                    <p class="fs-5">
-                        <?php
-                        $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
-                        $resultado = $conn->prepare($sql);
-                        $resultado->execute();
-                        $quantProd = $resultado->fetchColumn();
-                        echo $quantProd . " milheiros";
-                        ?>
-                    </p>
+                        <h5 class="card-title fs-4">Produção:</h5>
+                        <p class="fs-5">
+                            <?php
+                            $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
+                            $resultado = $conn->prepare($sql);
+                            $resultado->execute();
+                            $quantProd = $resultado->fetchColumn();
+                            if ($quantProd > 0) {
+                                echo $quantProd . " milheiros";
+                            } else {
+                                echo "Sem produção";
+                            }
+                            ?>
+                        </p>
                     </div>
-                    <a href="#" class="btn btn-primary">Ver mais</a>
+                    <div>
+                        <a href="produca.php" class="btn btn-primary">Veja mais</a>
+                    </div>
                 </div>
             </div>
             <div class="card" style="width: 20rem;">
                 <div class="card-body">
-                    <h5 class="card-title fs-4">Folha de pagamento:</h5>
-                    <p class="fs-5">
-                        <?php
-                        $sql = 'SELECT SUM(milheirosProduzidos) AS quantProd FROM producao';
-                        $resultado = $conn->prepare($sql);
-                        $resultado->execute();
-                        $quantProd = $resultado->fetchColumn();
-                        echo $quantProd . " milheiros";
-                        ?>
-                    </p>
-                    <a href="#" class="btn btn-primary">Ver mais</a>
+                    <div>
+                        <h5 class="card-title fs-4">Folha de pagamento:</h5>
+                        <p class="fs-5">
+                            <?php
+                            $sql = 'SELECT SUM(salario) AS valorFolha FROM folhapagamento';
+                            $resultado = $conn->prepare($sql);
+                            $resultado->execute();
+                            $valorFolha = $resultado->fetchColumn();
+                            if ($valorFolha > 0) {
+                                echo $valorFolha . " reais";
+                            } else {
+                                echo "Sem folha de pagamento";
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div>
+                        <a href="folha.php" class="btn btn-primary">Veja mais</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="modalusuarios" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body ">
-                    <?php
-                    if (count($usuario) > 0) {
-                    ?>
-                        <div class="table-responsive m-4 d-flex justify-content-start align-items-center flex-column">
-                            <div>
-                                <h2>
-                                    Usuários
-                                </h2>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <th>id</th>
-                                    <th>nome</th>
-                                    <th>senha</th>
-                                    <th>Ações</th>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($usuario as $usuari) {
-                                        echo "<tr>";
-                                        echo "<td>" . $usuari['idusuario'] . "</td>";
-                                        echo "<td>" . $usuari['nome'] . "</td>";
-                                        echo "<td>" . $usuari['senha'] . "</td>";
-                                        echo "<td class='d-flex flex-row'>" . "<button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalusuedi'>
-                                        Editar
-                                    </button>";
-                                        echo "
-                                    <form action='cruds/delFuncionario.php' method='post'>
-                                        <input type='hidden' name='id' value='" . $usuari['idusuario'] . "'>
-                                        <button class='btn btn-danger'>excluir</button>
-                                    </form>
-                                    </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php } else {
-                        echo "<div class='d-flex justify-content-center mt-5'>
-                    <h4 class=''>Você não possui funcionários cadastrados</h4>
-                    </div>
-                    ";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalusuedi" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body ">
-                    <?php
-                    $url = "index.php";
-                    if (count($usuario) > 0) {
-                    ?>
-                        <div class="table-responsive m-4 d-flex justify-content-start align-items-center flex-column">
-                            <div>
-                                <h2>
-                                    Usuários
-                                </h2>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <th>id</th>
-                                    <th>nome</th>
-                                    <th>senha</th>
-                                    <th>Ações</th>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($usuario as $usuari) {
-                                        echo "<tr>";
-                                        echo "<td>" . $usuari['idusuario'] . "</td>";
-                                        echo "<td>" . $usuari['nome'] . "</td>";
-                                        echo "<td>" . $usuari['senha'] . "</td>";
-                                        echo "<td>" . "<div class='d-flex flex-row'><button class='btn btn-warning'>editar</button>";
-                                        echo "
-                                    <form action='cruds/delFuncionario.php' method='post'>
-                                        <input type='hidden' name='id' value='" . $usuari['idusuario'] . "'>
-                                        <input type='hidden' name='id' value='" . $usuari['nome'] . "'>
-                                        <button class='btn btn-danger'>excluir</button>
-                                    </form>
-                                    </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php } else {
-                        echo "<div class='d-flex justify-content-center mt-5'>
-                    <h4 class=''>Você não possui usuários cadastrados</h4>
-                    </div>
-                    ";
-                    }
-                    ?>
-                </div>
-            </div>
+        <div>
+            
         </div>
     </div>
 
