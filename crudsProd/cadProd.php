@@ -10,6 +10,6 @@ if(isset($_POST['btnfunc'])) {
             $resultado -> bindValue(":milheirosProduzidos", $milheProd);
             $resultado -> execute();
 
-            header("Location:../produca.php?data_producao=$dataProd&sucesso=ok");
+            header("Location:../produca.php?data_producao=$dataProd&prodCad=ok");
         }
     }

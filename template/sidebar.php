@@ -113,12 +113,12 @@
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
-                    // if (result.isConfirmed) {
+                    if (result.isConfirmed) {
                         const [novoNome, novaSenha, idEditar] = result.value;
                         window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
-                    // } else {
-                    //     window.location.href = url;
-                    // }
+                    } else {
+                        window.location.href = url;
+                    }
                 });
             })();
         </script>

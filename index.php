@@ -12,6 +12,12 @@
 <body>
     <?php
     require 'template/sidebar.php';
+    // $sql = "SELECT * from testeRelatorio where contIDcat = (
+    //     SELECT count(m.id_musica) as contIDcat from musicas as m join artista as ar on m.id_artista = ar.id_artista group by ar.id_artista order by contIDcat desc limit 1)";
+    // $resultado = $conn->prepare($sql);
+    // $resultado->execute();
+    // $relatorios = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    
     ?>
 
 
@@ -84,11 +90,48 @@
             </div>
         </div>
         <div>
-            
+            <?php
+            // if (count($producao) > 0) {
+            ?>
+            <div class="">
+                <!-- <div class="table-responsive m-4 d-flex justify-content-center align-items-center">
+                        <table class="table table-hover table-sm text-center">
+                            <thead>
+                                <th scope="col">Data de produção</th>
+                                <th scope="col">Milheiros Produzidos</th>
+                                <th scope="col">Ações</th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // foreach ($producao as $p) {
+                                //     echo "<tr scope='row'>";
+                                //     echo "<td>" . $p['dataProducao'] . "</td>";
+                                //     echo "<td>" . $p['milheirosProduzidos'] . "</td>";
+                                //     echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='modalProd/modalEditar.php' method='get'> " .
+                                //         "<input type='hidden' name='idProducao' value='" . $p['idproducao'] . "'>" . "<input type='hidden' name='dataProducao' value='" . $p['dataProducao'] . "'>" . "<input type='hidden' name='milheirosProduzidos' value='" . $p['milheirosProduzidos'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
+                                //     echo "<form action='modalProd/modalExcluir.php' method='get'> " .
+                                //         "<input type='hidden' name='idProducao' value='" . $p['idproducao'] . "'>" . "<input type='hidden' name='dataProducao' value='" . $p['dataProducao'] . "'>" . "<input type='submit' class='btn btn-danger' value='excluir'></input>" . "</form></div></td>";
+                                //     echo "</tr>";
+                                // }
+                                ?>
+
+                            </tbody>
+                        </table>
+                    </div> -->
+            </div>
+            <?php
+            // } else {
+            //     echo "<div class='d-flex justify-content-center mt-5'>
+            //         <h4 class=''>Você não possui produções cadastradas</h4>
+            //         </div>
+            //         ";
+            // }
+            ?>
         </div>
     </div>
 
     <script>
+        const local = "index";
         $(".sidebar ul li").on("click", function() {
             $(".sidebar ul li.active").removeClass("active");
             $(this).addClass("active");

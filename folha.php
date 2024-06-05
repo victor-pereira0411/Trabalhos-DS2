@@ -20,11 +20,24 @@
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
             <h2>Funcionários</h2>
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                Finalizar pagamento
-            </button>
+            <form action="crudsFolha/deleFolha.php" method="get">
+                <input type="hidden" value="apagar" name="apague">
+                <input class="btn btn-secondary" type="submit" value="Finalizar pagamento">
+            </form>
         </div>
     </div>
+    <?php
+    if (isset($_GET['pagamento'])) {
+    ?>
+        <div class="container">
+            <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                Pagamento realizado com sucesso!
+                <a href="folha.php" class="btn btn-close"></a>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     if (count($folhaPagamentos) > 0) {
     ?>

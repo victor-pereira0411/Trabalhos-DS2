@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_GET['id'])) {
     require '../database/conne.php';
     $nome = $_GET['nome_modal'];

@@ -60,8 +60,8 @@
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    const [novoNomeModEditFunc, novoGanhoMilhModEditFunc, matModEditFunc] = result.value;
-                    window.location.href = "crudFunc/atuFuncionario.php?novoNomeFunc=" + novoNomeModEditFunc + "&novoGanhoMilheiro=" + novoGanhoMilhModEditFunc + "&matriculaEditar=" + matModEditFunc;
+                        const [novoNomeModEditFunc, novoGanhoMilhModEditFunc, matModEditFunc] = result.value;
+                        window.location.href = "crudFunc/atuFuncionario.php?novoNomeFunc=" + novoNomeModEditFunc + "&novoGanhoMilheiro=" + novoGanhoMilhModEditFunc + "&matriculaEditar=" + matModEditFunc;
                     } else {
                         window.location.href = url;
                     }
@@ -69,11 +69,12 @@
             })();
         </script>
     <?php
-    } if (isset($_GET['matExclFunc'])) {
+    }
+    if (isset($_GET['matExclFunc'])) {
     ?>
         <script>
             var nomeModExclFunc = "<?php echo $_GET['nomeModExclFunc'] ?>";
-            var matExclFunc = "<?php echo $_GET['matExclFunc']?>";
+            var matExclFunc = "<?php echo $_GET['matExclFunc'] ?>";
             var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
             (function() {
                 Swal.fire({
@@ -140,7 +141,7 @@
                     $nomeFunCad = $_GET['nomeFunCad'];
                 ?>
                     <div class="container">
-                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                        <div class='alert alert-success alert-dismissible fade show fs-6' role='alert'>
                             <?php echo $nomeFunCad ?> cadastrado com sucesso!
                             <a href="funcionario.php" class="btn btn-close"></a>
                         </div>
@@ -151,21 +152,32 @@
                 ?>
 
                     <div class="container">
-                        <div class='alert alert-danger alert-dismissible fade show text-center rounded' role='alert'>
+                        <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
                             <?php echo $nomeFunDel ?> deletado com sucesso!
                             <a href="funcionario.php" class="btn btn-close"></a>
                         </div>
                     </div>
 
                 <?php
-                }  else if (isset($_GET['atualizar'])) {
+                } else if (isset($_GET['atualizar'])) {
                     $nomeFunAtu = $_GET['nomeFuncionario'];
                 ?>
 
                     <div class="container">
-                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                        <div class='alert alert-success alert-dismissible fade show fs-6' role='alert'>
                             <?php echo $nomeFunAtu ?> atualizado com sucesso!
                             <a href="funcionario.php" class="btn btn-close"></a>
+                        </div>
+                    </div>
+
+                <?php
+                } else if (isset($_GET['funcPagar'])) {
+                ?>
+
+                    <div class="container">
+                        <div class='alert alert-success alert-dismissible fade show fs-6' role='alert'>
+                            Funcionário ainda deve ser pago para ser excluido!
+                            <a href="produca.php" class="btn btn-close"></a>
                         </div>
                     </div>
 
@@ -188,10 +200,6 @@
                             <th scope="col">Ações</th>
                         </thead>
                         <tbody>
-                            <!-- <form action='cruds/delFuncionario.php' method='get'> " .
-                                    "<input type='hidden' name='matricula' value='" . $funcionario['matricula'] . "'>" .
-                                    "<input type='hidden' name='nome' value='" . $funcionario['nome'] . "'>" -->
-
                             <?php
                             foreach ($funcionarios as $funcionario) {
                                 echo "<tr scope='row'>";

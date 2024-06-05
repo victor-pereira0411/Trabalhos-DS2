@@ -162,7 +162,7 @@
 
         <div>
             <?php
-            if (isset($_GET['sucesso'])) {
+            if (isset($_GET['prodCad'])) {
                 $dataProd = $_GET['data_producao'];
             ?>
                 <div class="container">
@@ -256,41 +256,32 @@
         $(".close-btn").on("click", function() {
             $(".sidebar").removeClass("active");
         });
-
-        // Função para remover a classe do Bootstrap quando a tela for menor que 768px
+        
         function removeClassOnSmallScreen() {
             const screenWidth = window.innerWidth;
-            const element = document.querySelector('.nav'); // Elemento Bootstrap com a classe a ser removida
+            const element = document.querySelector('.nav');
 
-            // Verifica se a largura da tela é menor que 768px (padrão para tablets e dispositivos menores)
             if (screenWidth < 768) {
-                // Remove a classe do Bootstrap
                 element.classList.remove('justify-content-end');
             } else {
-                // Adiciona a classe do Bootstrap se a largura da tela for maior ou igual a 768px
                 element.classList.add('justify-content-end');
             }
         }
 
-        // Chama a função quando a página carrega e quando a janela é redimensionada
         window.addEventListener('load', removeClassOnSmallScreen);
         window.addEventListener('resize', removeClassOnSmallScreen);
 
         function removeClassOnSmallScreen() {
             const local = "producao";
-            const element = document.querySelector('.btn3'); // Elemento Bootstrap com a classe a ser removida
+            const botao = document.querySelector('.btn3');
 
-            // Verifica se a largura da tela é menor que 768px (padrão para tablets e dispositivos menores)
             if (local === "producao") {
-                // Remove a classe do Bootstrap
-                element.classList.add('active');
+                botao.classList.add('active');
             } else {
-                // Adiciona a classe do Bootstrap se a largura da tela for maior ou igual a 768px
-                element.classList.remove('justify-content-end');
+                botao.classList.remove('justify-content-end');
             }
         }
 
-        // Chama a função quando a página carrega e quando a janela é redimensionada
         window.addEventListener('load', removeClassOnSmallScreen);
         window.addEventListener('resize', removeClassOnSmallScreen);
     </script>

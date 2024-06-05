@@ -1,6 +1,13 @@
 <?php
 if(isset($_GET['matExclFunc'])) {
-    require '../database/conne.php';
+require '../database/conne.php';
+$matricula = $_GET['matExclFunc'];
+$sqlFuncDel = "SELECT idfolhapagamento FROM folhapagamento WHERE idfolhapagamento = :matricula";
+$resultadoFuncDel = $conn->prepare($sqlFuncDel);
+$resultadoFuncDel->bindValue(":matricula", $matricula);
+$resultadoFuncDel->execute();
+$funcionarioPagar = $resultadoFuncDel->fetch();
+if(!isset($funcionarioPagar)) {
     $nomeModExclFunc = $_GET['nomeModExclFunc'];
     $matExclFunc = $_GET['matExclFunc'];
     
@@ -9,4 +16,9 @@ if(isset($_GET['matExclFunc'])) {
     $resultado->bindValue(":matExclFunc", $matExclFunc);
     $resultado->execute();
     header("Location: ../funcionario.php?nomeModExclFunc=$nomeModExclFunc&deletar=ok");
+} else {
+    header("Location: ../funcionario.php?funcPagar=nao");
+}
+} else {
+    header("Location: ../funcionario.php");
 }
