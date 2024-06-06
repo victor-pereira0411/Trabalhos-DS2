@@ -21,7 +21,6 @@
         <script>
             var idProducaoExc = "<?php echo $_GET['idProducaoExc'] ?>";
             var dataProducao = "<?php echo $_GET['dataProducao'] ?>";
-            var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
             (function() {
                 Swal.fire({
                     title: "Quer mesmo excluir essa produção?",
@@ -37,7 +36,7 @@
                     if (result.isConfirmed) {
                         window.location.href = "crudsProd/delProd.php?dataProducao=" + dataProducao + "&idProducaoExc=" + idProducaoExc;
                     } else {
-                        window.location.href = url;
+                        window.location.href = "produca.php";
                     }
                 });
             })();
@@ -51,7 +50,6 @@
                 var dataProducao = "<?php echo $_GET['dataProducao'] ?>";
                 var milheirosProduzidos = "<?php echo $_GET['milheirosProduzidos'] ?>";
                 var idProducaoEdi = "<?php echo $_GET['idProducaoEdi'] ?>";
-                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
 
                 Swal.fire({
                     title: "Altere a produção",
@@ -83,7 +81,7 @@
                     const [idProducaoEdi, NovadataProducao, novoMilheirosProduzidos] = result.value;
                     window.location.href = "crudsProd/editProd.php?idProducaoEdi=" + idProducaoEdi + "&NovadataProducao=" + NovadataProducao + "&novoMilheirosProduzidos=" + novoMilheirosProduzidos;
                     } else {
-                        window.location.href = url;
+                        window.location.href = "produca.php";
                     }
                 });
             })();
@@ -132,32 +130,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modaleditar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar funcionário</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" action="cruds/cadFuncionario.php" method="post">
-                            <div class="mb-3">
-                                <label for="text" class="form-label">Data </label>
-                                <input type="text" class="form-control" id="nomfunc" name="nomfunc" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="text" class="form-label">Nome do funcionário</label>
-                                <input type="text" class="form-control" id="nomfunc" name="nomfunc" value="<?php ?>" required>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" name="btnfunc">Cadastrar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
         <div>
@@ -191,6 +163,28 @@
                 <div class="container">
                     <div class='alert alert-success alert-dismissible fade show' role='alert'>
                         <?php echo $NovadataProducao ?> atualizada com sucesso!
+                        <a href="produca.php" class="btn btn-close"></a>
+                    </div>
+                </div>
+
+            <?php
+            } else if (isset($_GET['folha'])) {
+            ?>
+
+                <div class="container">
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        Ainda há pagamentos a ser feitos da última produção!
+                        <a href="produca.php" class="btn btn-close"></a>
+                    </div>
+                </div>
+
+            <?php
+            } else if (isset($_GET['prod'])) {
+            ?>
+
+                <div class="container">
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        Não há produções para ser enviadas para a folha de pagamento!
                         <a href="produca.php" class="btn btn-close"></a>
                     </div>
                 </div>

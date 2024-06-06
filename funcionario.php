@@ -175,9 +175,9 @@
                 ?>
 
                     <div class="container">
-                        <div class='alert alert-success alert-dismissible fade show fs-6' role='alert'>
+                        <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
                             Funcionário ainda deve ser pago para ser excluido!
-                            <a href="produca.php" class="btn btn-close"></a>
+                            <a href="funcionario.php" class="btn btn-close"></a>
                         </div>
                     </div>
 

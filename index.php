@@ -12,8 +12,8 @@
 <body>
     <?php
     require 'template/sidebar.php';
-    // $sql = "SELECT * from testeRelatorio where contIDcat = (
-    //     SELECT count(m.id_musica) as contIDcat from musicas as m join artista as ar on m.id_artista = ar.id_artista group by ar.id_artista order by contIDcat desc limit 1)";
+    // $sqlRelatorio = "SELECT * from testeRelatorio where contIDcat = (
+    // SELECT count(m.id_musica) as contIDcat from musicas as m join artista as ar on m.id_artista = ar.id_artista group by ar.id_artista order by contIDcat desc limit 1)";
     // $resultado = $conn->prepare($sql);
     // $resultado->execute();
     // $relatorios = $resultado->fetchAll(PDO::FETCH_ASSOC);

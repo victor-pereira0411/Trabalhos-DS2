@@ -1,13 +1,11 @@
 <?php
 if(isset($_GET['matExclFunc'])) {
 require '../database/conne.php';
-$matricula = $_GET['matExclFunc'];
-$sqlFuncDel = "SELECT idfolhapagamento FROM folhapagamento WHERE idfolhapagamento = :matricula";
+$sqlFuncDel = "SELECT COUNT(*) FROM folhapagamento";
 $resultadoFuncDel = $conn->prepare($sqlFuncDel);
-$resultadoFuncDel->bindValue(":matricula", $matricula);
 $resultadoFuncDel->execute();
-$funcionarioPagar = $resultadoFuncDel->fetch();
-if(!isset($funcionarioPagar)) {
+$funcionarioPagar = $resultadoFuncDel->fetchColumn();
+if($funcionarioPagar == 0) {
     $nomeModExclFunc = $_GET['nomeModExclFunc'];
     $matExclFunc = $_GET['matExclFunc'];
     
