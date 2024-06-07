@@ -12,12 +12,10 @@
 <body>
     <?php
     require 'template/sidebar.php';
-    // $sqlRelatorio = "SELECT * from testeRelatorio where contIDcat = (
-    // SELECT count(m.id_musica) as contIDcat from musicas as m join artista as ar on m.id_artista = ar.id_artista group by ar.id_artista order by contIDcat desc limit 1)";
-    // $resultado = $conn->prepare($sql);
-    // $resultado->execute();
-    // $relatorios = $resultado->fetchAll(PDO::FETCH_ASSOC);
-    
+    $sqlRelatorio = "SELECT dataProducao, milheirosProduzidos from producao order by milheirosProduzidos desc limit 4";
+    $resultado = $conn->prepare($sqlRelatorio);
+    $resultado->execute();
+    $relatorio = $resultado->fetchAll();
     ?>
 
 
@@ -91,41 +89,37 @@
         </div>
         <div>
             <?php
-            // if (count($producao) > 0) {
+            if (count($relatorio) > 0) {
             ?>
-            <div class="">
-                <!-- <div class="table-responsive m-4 d-flex justify-content-center align-items-center">
+                    <div class="table-responsive m-4 d-flex flex-column justify-content-center align-items-center">
+                        <div>
+                            <h5>Relatório das maiores produções</h5>
+                        </div>
                         <table class="table table-hover table-sm text-center">
                             <thead>
                                 <th scope="col">Data de produção</th>
                                 <th scope="col">Milheiros Produzidos</th>
-                                <th scope="col">Ações</th>
                             </thead>
                             <tbody>
                                 <?php
-                                // foreach ($producao as $p) {
-                                //     echo "<tr scope='row'>";
-                                //     echo "<td>" . $p['dataProducao'] . "</td>";
-                                //     echo "<td>" . $p['milheirosProduzidos'] . "</td>";
-                                //     echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='modalProd/modalEditar.php' method='get'> " .
-                                //         "<input type='hidden' name='idProducao' value='" . $p['idproducao'] . "'>" . "<input type='hidden' name='dataProducao' value='" . $p['dataProducao'] . "'>" . "<input type='hidden' name='milheirosProduzidos' value='" . $p['milheirosProduzidos'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
-                                //     echo "<form action='modalProd/modalExcluir.php' method='get'> " .
-                                //         "<input type='hidden' name='idProducao' value='" . $p['idproducao'] . "'>" . "<input type='hidden' name='dataProducao' value='" . $p['dataProducao'] . "'>" . "<input type='submit' class='btn btn-danger' value='excluir'></input>" . "</form></div></td>";
-                                //     echo "</tr>";
-                                // }
+                                foreach ($relatorio as $r) {
+                                    echo "<tr scope='row'>";
+                                    echo "<td>" . $r['dataProducao'] . "</td>";
+                                    echo "<td>" . $r['milheirosProduzidos'] . "</td>";
+                                    echo "</tr>";
+                                }
                                 ?>
 
                             </tbody>
                         </table>
-                    </div> -->
-            </div>
+                    </div>
             <?php
-            // } else {
-            //     echo "<div class='d-flex justify-content-center mt-5'>
-            //         <h4 class=''>Você não possui produções cadastradas</h4>
-            //         </div>
-            //         ";
-            // }
+            } else {
+                echo "<div class='d-flex justify-content-center mt-5'>
+                    <h4 class=''>Você não possui produções a ser avaliadas</h4>
+                    </div>
+                    ";
+            }
             ?>
         </div>
     </div>

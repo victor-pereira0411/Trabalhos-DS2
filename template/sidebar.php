@@ -128,7 +128,7 @@
     ?>
         <script>
             (function() {
-
+                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
                 Swal.fire({
                     title: "Cadastrar usuário",
                     html: `

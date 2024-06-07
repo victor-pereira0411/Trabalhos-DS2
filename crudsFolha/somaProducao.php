@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['btnProd'])) {
     require '../database/conne.php';
-    $sqlProducao = "SELECT COUNT(*) FROM producao";
+    $sqlProducao = "SELECT COUNT(idproducao) FROM producao";
     $resultadoProducao = $conn->prepare($sqlProducao);
     $resultadoProducao->execute();
     $producao = $resultadoProducao->fetchColumn();

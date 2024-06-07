@@ -101,7 +101,7 @@
     }
     ?>
     <div class="dashboard-content px-3 pt-4">
-        <div class="fs-4 m-2 mt-1 d-flex justify-content-between flex-column ">
+        <div class="fs-4 m-2 mt-1 d-flex justify-content-between flex-column">
             <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
                 <h2>Funcionários</h2>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
@@ -259,9 +259,9 @@
         window.addEventListener('resize', removeClassOnSmallScreen);
 
         function removeClassOnSmallScreen() {
-            const local = "index";
+            const local = "funcionario";
             const element = document.querySelector('.btn2');
-            if (local === "index") {
+            if (local === "funcionario") {
                 element.classList.add('active');
             } else {
                 element.classList.remove('active');
