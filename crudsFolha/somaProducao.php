@@ -1,6 +1,11 @@
 <?php
 if (isset($_GET['btnProd'])) {
     require '../database/conne.php';
+    $sqlFuncionario = "SELECT COUNT(matricula) FROM funcionarios";
+    $resultadoFuncionario = $conn->prepare($sqlFuncionario);
+    $resultadoFuncionario->execute();
+    $funcionario = $resultadoFuncionario->fetchColumn();
+    if($funcionario !== 0){
     $sqlProducao = "SELECT COUNT(idproducao) FROM producao";
     $resultadoProducao = $conn->prepare($sqlProducao);
     $resultadoProducao->execute();
@@ -26,6 +31,9 @@ if (isset($_GET['btnProd'])) {
     } else {
         header("Location: ../produca.php?prod=nao");
     }
+} else {
+    header("Location: ../produca.php?funcionario=nao");
+}
 } else {
     header("Location: ../produca.php");
 }

@@ -5,7 +5,7 @@ if (isset($_GET['quantProdSoma'])) {
     $resultado = $conn->prepare($sql);
     $resultado->execute();
     $funcionarios = $resultado->fetchAll();
-    
+    var_dump($funcionarios);
     foreach($funcionarios as $funcionario) {
         $somaMilheiros = $_GET['quantProdSoma'];
         $matriculaFuncionario = $funcionario['matricula'];
@@ -18,7 +18,7 @@ if (isset($_GET['quantProdSoma'])) {
         $resultadoFolha -> bindValue(":milheirosProduzidos", $somaMilheiros);
         $resultadoFolha -> bindValue(":valorMilheiro", $valorMilheiro);
         $resultadoFolha ->execute();
-
         header('Location: ../folha.php');
-    }
+
+        }
 }

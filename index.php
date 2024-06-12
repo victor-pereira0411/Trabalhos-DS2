@@ -95,7 +95,7 @@
                         <div>
                             <h5>Relatório das maiores produções</h5>
                         </div>
-                        <table class="table table-hover table-sm text-center">
+                        <table class="table table-bordered table-hover table-sm text-center">
                             <thead>
                                 <th scope="col">Data de produção</th>
                                 <th scope="col">Milheiros Produzidos</th>

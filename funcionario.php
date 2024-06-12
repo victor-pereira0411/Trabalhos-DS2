@@ -31,7 +31,6 @@
                 var nomeModEditFunc = "<?php echo $_GET['nomeModEditFunc'] ?>";
                 var ganhoMilhModEditFunc = "<?php echo $_GET['ganhoMilhModEditFunc'] ?>";
                 var matModEditFunc = "<?php echo $_GET['matModEditFunc'] ?>";
-                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
 
                 Swal.fire({
                     title: "Edite o usuário",
@@ -63,7 +62,7 @@
                         const [novoNomeModEditFunc, novoGanhoMilhModEditFunc, matModEditFunc] = result.value;
                         window.location.href = "crudFunc/atuFuncionario.php?novoNomeFunc=" + novoNomeModEditFunc + "&novoGanhoMilheiro=" + novoGanhoMilhModEditFunc + "&matriculaEditar=" + matModEditFunc;
                     } else {
-                        window.location.href = url;
+                        window.location.href = "funcionario.php";
                     }
                 });
             })();
@@ -75,7 +74,6 @@
         <script>
             var nomeModExclFunc = "<?php echo $_GET['nomeModExclFunc'] ?>";
             var matExclFunc = "<?php echo $_GET['matExclFunc'] ?>";
-            var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
             (function() {
                 Swal.fire({
                     title: "Quer mesmo excluir esse funcionário?",
@@ -91,7 +89,7 @@
                     if (result.isConfirmed) {
                         window.location.href = "crudFunc/delFuncionario.php?nomeModExclFunc=" + nomeModExclFunc + "&matExclFunc=" + matExclFunc;
                     } else {
-                        window.location.href = url;
+                        window.location.href = "funcionario.php";
                     }
                 });
             })();
@@ -177,6 +175,18 @@
                     <div class="container">
                         <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
                             Funcionário ainda deve ser pago para ser excluido!
+                            <a href="funcionario.php" class="btn btn-close"></a>
+                        </div>
+                    </div>
+
+                <?php
+                } else if (isset($_GET['funExiste'])) {
+                    $funExiste = $_GET['nomeFunExiste'];
+                ?>
+
+                    <div class="container">
+                        <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
+                            já possui funcionário com o nome <?php echo $funExiste ?> cadastrado!
                             <a href="funcionario.php" class="btn btn-close"></a>
                         </div>
                     </div>

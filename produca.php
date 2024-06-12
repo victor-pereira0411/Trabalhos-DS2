@@ -28,7 +28,7 @@
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
+                    cancelButtonColor: "#6c757d",
                     cancelButtonText: "Cancelar",
                     confirmButtonText: "Sim, excluir produção!",
                     reverseButtons: true
@@ -68,6 +68,7 @@
                     confirmButtonText: "Atualizar",
                     cancelButtonText: "Cancelar",
                     showLoaderOnConfirm: true,
+                    confirmButtonColor: "#0d6efd",
                     reverseButtons: true,
                     preConfirm: () => {
                         const idProducaoEdi = document.getElementById('idProducaoEdi').value;
@@ -78,8 +79,33 @@
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    const [idProducaoEdi, NovadataProducao, novoMilheirosProduzidos] = result.value;
-                    window.location.href = "crudsProd/editProd.php?idProducaoEdi=" + idProducaoEdi + "&NovadataProducao=" + NovadataProducao + "&novoMilheirosProduzidos=" + novoMilheirosProduzidos;
+                        const [idProducaoEdi, NovadataProducao, novoMilheirosProduzidos] = result.value;
+                        window.location.href = "crudsProd/editProd.php?idProducaoEdi=" + idProducaoEdi + "&NovadataProducao=" + NovadataProducao + "&novoMilheirosProduzidos=" + novoMilheirosProduzidos;
+                    } else {
+                        window.location.href = "produca.php";
+                    }
+                });
+            })();
+        </script>
+    <?php
+    }
+    if (isset($_GET['btnProd'])) {
+    ?>
+        <script>
+            (function() {
+                Swal.fire({
+                    title: "Quer mesmo finalizar essa produção?",
+                    text: "Você irá enviar essa produção para a folha de pagamento!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#6c757d",
+                    cancelButtonText: "Cancelar",
+                    confirmButtonText: "Sim, enviar produção!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "crudsFolha/somaProducao.php?btnProd=ok";
                     } else {
                         window.location.href = "produca.php";
                     }
@@ -93,9 +119,8 @@
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
             <h2>Produção</h2>
             <div class="d-flex flex-direction-row gap-3">
-                <form action="crudsFolha/somaproducao.php" method="get">
-                    <input type="hidden" value="<?php $producao ?>" name="quantProd">
-                    <button type="submit" class="btn btn-secondary" name="btnProd">
+                <form action="modalProd/modalFinalizar.php" method="get">
+                    <button type="submit" class="btn btn-secondary" name="btnProd" value="ok">
                         Finalizar produção
                     </button>
                 </form>
@@ -190,6 +215,17 @@
                 </div>
 
             <?php
+            } else if (isset($_GET['funcionario'])) {
+            ?>
+
+                <div class="container">
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        Não há funcionários a ser pago para ser enviada para a folha de pagamento!
+                        <a href="produca.php" class="btn btn-close"></a>
+                    </div>
+                </div>
+
+            <?php
             }
             ?>
 
@@ -250,7 +286,7 @@
         $(".close-btn").on("click", function() {
             $(".sidebar").removeClass("active");
         });
-        
+
         function removeClassOnSmallScreen() {
             const screenWidth = window.innerWidth;
             const element = document.querySelector('.nav');

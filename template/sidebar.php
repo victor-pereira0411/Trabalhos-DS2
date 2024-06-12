@@ -295,7 +295,7 @@
                                                 <?php
                                                 if (count($usuario) > 0) {
                                                 ?>
-                                                    <div class="">
+                                                    <div class="table-responsive-md">
                                                         <table class="table table-bordered table-hover text-center table-lg">
                                                             <thead>
                                                                 <th scope="col" id="1">id</th>

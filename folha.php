@@ -15,67 +15,97 @@
     $resultadoFolha = $conn->prepare($sqlFolha);
     $resultadoFolha->execute();
     $folhaPagamentos = $resultadoFolha->fetchAll(PDO::FETCH_ASSOC);
-
+    if (isset($_GET['pagar'])) {
+    ?>
+        <script>
+            (function() {
+                Swal.fire({
+                    title: "Você já fez esse pagamento?",
+                    text: "Você irá apagar essa folha de pagamento do sistema!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#6c757d",
+                    cancelButtonText: "Cancelar",
+                    confirmButtonText: "Sim, já realizei o pagamento!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "crudsFolha/deleFolha.php?apague=ok";
+                    } else {
+                        window.location.href = "folha.php";
+                    }
+                });
+            })();
+        </script>
+    <?php
+    }
     ?>
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
-            <h2>Funcionários</h2>
-            <form action="crudsFolha/deleFolha.php" method="get">
-                <input type="hidden" value="apagar" name="apague">
+            <h2>Folha de pagamento</h2>
+            <form action="modalFolha/finalPaga.php" method="get">
+                <input type="hidden" value="ok" name="apague">
                 <input class="btn btn-secondary" type="submit" value="Finalizar pagamento">
             </form>
         </div>
-    </div>
-    <?php
-    if (isset($_GET['pagamento'])) {
-    ?>
-        <div class="container">
-            <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                Pagamento realizado com sucesso!
-                <a href="folha.php" class="btn btn-close"></a>
+        <?php
+        if (isset($_GET['pagamento'])) {
+        ?>
+            <div class="container">
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                    Pagamento realizado com sucesso!
+                    <a href="folha.php" class="btn btn-close"></a>
+                </div>
             </div>
-        </div>
-    <?php
-    }
-    ?>
-    <?php
-    if (count($folhaPagamentos) > 0) {
-    ?>
-        <div class="m-4 d-flex justify-content-center align-items-center">
-            <div class="table-responsive">
-                <table class="table table-hover table-lg text-center fs-5">
-                    <thead>
-                        <th scope="col">Nome do funcionário</th>
-                        <th scope="col">Valor do milheiro</th>
-                        <th scope="col">Milheiros Produzidos</th>
-                        <th scope="col">Salário</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($folhaPagamentos as $folhaPagamento) {
-                            echo "<tr scope='row'>";
-                            echo "<td>" . $folhaPagamento['nome'] . "</td>";
-                            echo "<td>" . $folhaPagamento['valorMilheiro'] . " reais" . "</td>";
-                            echo "<td>" . $folhaPagamento['milheirosProduzidos'] . " milheiros" . "</td>";
-                            echo "<td>" . $folhaPagamento['salario'] . " reais" . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+        <?php
+        }
+        if (isset($_GET['naoPagamen'])) {
+        ?>
+            <div class="container">
+                <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    Não possui folha de pagamento a ser finalizada!
+                    <a href="folha.php" class="btn btn-close"></a>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+        <?php
+        if (count($folhaPagamentos) > 0) {
+        ?>
+            <div class="m-4 d-flex justify-content-center align-items-center">
+                <div class="table-responsive">
+                    <table class="table table-hover table-lg text-center fs-5">
+                        <thead>
+                            <th scope="col">Nome do funcionário</th>
+                            <th scope="col">Valor do milheiro</th>
+                            <th scope="col">Milheiros Produzidos</th>
+                            <th scope="col">Salário</th>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($folhaPagamentos as $folhaPagamento) {
+                                echo "<tr scope='row'>";
+                                echo "<td>" . $folhaPagamento['nome'] . "</td>";
+                                echo "<td>" . $folhaPagamento['valorMilheiro'] . " reais" . "</td>";
+                                echo "<td>" . $folhaPagamento['milheirosProduzidos'] . " milheiros" . "</td>";
+                                echo "<td>" . $folhaPagamento['salario'] . " reais" . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    <?php } else {
-        echo "<div class='d-flex justify-content-center mt-5'>
+        <?php } else {
+            echo "<div class='d-flex justify-content-center mt-5'>
                     <h4 class=''>Você não possui folhas de pagamentos pendentes!</h4>
                     </div>
                     ";
-    }
-    ?>
-    </div>
-    </div>
-    </div>
+        }
+        ?>
     </div>
     <script>
         const local = "folha";
