@@ -13,15 +13,19 @@
             // if($resultado ->rowCount() === 0){
             $sql = "UPDATE usuario SET nome = :nome, senha = :senha WHERE idusuario = :id";
             $resultado= $conn->prepare($sql);
-            $resultado->bindValue("nome", $novoNome);
-            $resultado->bindValue("senha", $novaSenha);
-            $resultado->bindValue("id", $idUsuario);
+            $resultado->bindValue(":nome", $novoNome);
+            $resultado->bindValue(":senha", $novaSenha);
+            $resultado->bindValue(":id", $idUsuario);
             $resultado->execute();
             header("Location: ../index.php?editou=ok&nomeUsuario=$novoNome");
         // }
         // else {
         //     header('Location: ../gerencia.php?sucesso=jatem');
         // }
+    } else {
+        $idEditar = $_GET['ideditar'];
+        $url = $_SERVER['HTTP_REFERER'] . "&dados=nao";
+        header("Location: " . $url);
     }
     } 
     else {

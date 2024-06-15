@@ -78,26 +78,44 @@
 
     <?php
     }
-    if (isset($_GET['nome_editar'])) {
+    if (isset($_GET['nomeEditar'])) {
     ?>
         <script>
             (function() {
-                var nomeUsuEdi = "<?php echo $_GET['nome_editar'] ?>";
-                var senhaEditar = "<?php echo $_GET['senha_editar'] ?>";
-                var idEditar = "<?php echo $_GET['ideditar'] ?>";
-                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
-
+                var nomeUsuEdi = "<?php echo $_GET['nomeEditar'] ?>";
+                var senhaEditar = "<?php echo $_GET['senhaEditar'] ?>";
+                var idEditar = "<?php echo $_GET['idEditar'] ?>";
+                var urlSemQuery = window.location.href.split('?')[0];
                 Swal.fire({
                     title: "Edite o usuário",
-                    html: `
+                    html: `<?php
+                            if (isset($_GET["dados"])) {
+                                echo "<div class='container'>
+                        <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                            Preencha todos os campos
+                            <a href='index.php?nomeEditar=$nomemod&senhaEditar=$senhamod&idEditar=$idEditar' class='btn btn-close'></a>
+                        </div>
+                    </div>";
+                            } 
+                            ?>
                 <div class="mb-3">
+                    <div class="d-flex justify-content-start">
                     <label for="usuario" class="form-label">Usuário</label>
+                    </div>
                     <input type="hidden" class="form-control" id="ideditar" name="ideditar" value="${idEditar}">
-                    <input type="text" class="form-control" id="usuario" name="usuario" value="${nomeUsuEdi}">
+                    <input type="text" class="form-control" id="usuario" name="usuario" value="${nomeUsuEdi}" maxlength="15" required>
+                    <div class="d-flex justify-content-start">
+                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    </div>
                 </div>
                 <div class="mb-3">
+                    <div class="d-flex justify-content-start">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="text" class="form-control" id="senha" name="senha" value="${senhaEditar}">
+                    </div>
+                    <input type="text" class="form-control" id="senha" name="senha" value="${senhaEditar}" maxlength="15" required>
+                    <div class="d-flex justify-content-start">
+                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    </div>
                 </div>
             `,
                     showCancelButton: true,
@@ -117,7 +135,7 @@
                         const [novoNome, novaSenha, idEditar] = result.value;
                         window.location.href = "crudUsuario/updaUsuario.php?nomeeditar=" + novoNome + "&senhaeditar=" + novaSenha + "&ideditar=" + idEditar;
                     } else {
-                        window.location.href = url;
+                        window.location.href = urlSemQuery;
                     }
                 });
             })();
@@ -128,17 +146,44 @@
     ?>
         <script>
             (function() {
-                var url = "<?php echo $_SERVER['HTTP_REFERER'] ?>";
+                var urlSemQuery = window.location.href.split('?')[0];
                 Swal.fire({
                     title: "Cadastrar usuário",
-                    html: `
-                <div class="mb-3">
+                    html: `<?php
+                            if (isset($_GET["dados"])) {
+                                echo "<div class='container'>
+                        <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                            Preencha todos os campos
+                            <a href='index.php?cadastrarUser=ok' class='btn btn-close'></a>
+                        </div>
+                    </div>";
+                            } 
+                            if (isset($_GET["usuario"])) {
+                                echo "<div class='container'>
+                        <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                            Já existe usuário com esses dados
+                            <a href='index.php?cadastrarUser=ok' class='btn btn-close'></a>
+                        </div>
+                    </div>";
+                            }
+                            ?>
+                <div class="mb-3 d-flex flex-column justify-content-start">
+                    <div class="d-flex justify-content-start">
                     <label for="usuario" class="form-label">Usuário</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario">
+                    </div>
+                    <input type="text" class="form-control" id="usuario" name="usuario" maxlength="15" required>
+                    <div class="d-flex justify-content-start">
+                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    </div>
                 </div>
                 <div class="mb-3">
+                    <div class="d-flex justify-content-start">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="text" class="form-control" id="senha" name="senha">
+                    </div>
+                    <input type="text" class="form-control" id="senha" name="senha" maxlength="15" required>
+                    <div class="d-flex justify-content-start">
+                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    </div>
                 </div>
             `,
                     showCancelButton: true,
@@ -157,7 +202,7 @@
                         const [Nome, Senha] = result.value;
                         window.location.href = "crudUsuario/cadUsuario.php?nomUsu=" + Nome + "&senha=" + Senha + "&cadastraUsuario=ok";
                     } else {
-                        window.location.href = url;
+                        window.location.href = urlSemQuery;
                     }
                 });
             })();
@@ -286,7 +331,7 @@
                                                                 <input type="hidden" value="cadastro" name="adicionaUser">
                                                                 <input class="btn btn-primary" type="submit" value="Adicionar">
                                                             </form>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -295,7 +340,7 @@
                                                 <?php
                                                 if (count($usuario) > 0) {
                                                 ?>
-                                                    <div class="table-responsive-md">
+                                                    <div class="table-responsive-lg">
                                                         <table class="table table-bordered table-hover text-center table-lg">
                                                             <thead>
                                                                 <th scope="col" id="1">id</th>

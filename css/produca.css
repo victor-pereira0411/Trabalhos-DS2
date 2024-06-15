@@ -1,0 +1,10 @@
+@media (max-width: 576px) {
+  .title-prod {
+        display: flex;
+        flex-direction: column;
+  }
+  .botao {
+    display: flex;
+    flex-direction: column;
+  }
+}

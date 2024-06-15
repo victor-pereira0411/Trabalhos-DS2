@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/produca.css">
 </head>
 
 <body>
@@ -117,16 +118,18 @@
     ?>
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
-            <h2>Produção</h2>
-            <div class="d-flex flex-direction-row gap-3">
-                <form action="modalProd/modalFinalizar.php" method="get">
-                    <button type="submit" class="btn btn-secondary" name="btnProd" value="ok">
-                        Finalizar produção
+            <div class="title-prod d-flex flex-direction-row justify-content-between w-100">
+                <h2>Produção</h2>
+                <div class="d-flex flex-direction-row gap-3">
+                    <form action="modalProd/modalFinalizar.php" method="get">
+                        <button type="submit" class="btn btn-secondary" name="btnProd" value="ok">
+                            Finalizar produção
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
+                        adicionar
                     </button>
-                </form>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                    adicionar
-                </button>
+                </div>
             </div>
             <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">

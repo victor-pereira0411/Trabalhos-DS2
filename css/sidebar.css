@@ -61,3 +61,6 @@ hr.h-color {
     flex-direction: column;
   }
 }
+.limit {
+  font-size: 7px;
+}
