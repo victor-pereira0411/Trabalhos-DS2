@@ -75,7 +75,7 @@
         if (count($folhaPagamentos) > 0) {
         ?>
             <div class="m-4 d-flex justify-content-center align-items-center">
-                <div class="table-responsive">
+                <div class="table-responsive w-100">
                     <table class="table table-hover table-lg text-center fs-5">
                         <thead>
                             <th scope="col">Nome do funcionário</th>
@@ -101,14 +101,13 @@
             </div>
         <?php } else {
             echo "<div class='d-flex justify-content-center mt-5'>
-                    <h4 class=''>Você não possui folhas de pagamentos pendentes!</h4>
+                    <h4>Você não possui folhas de pagamentos pendentes!</h4>
                     </div>
                     ";
         }
         ?>
     </div>
     <script>
-        const local = "folha";
         $(".sidebar ul li").on("click", function() {
             $(".sidebar ul li.active").removeClass("active");
             $(this).addClass("active");

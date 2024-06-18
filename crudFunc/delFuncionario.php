@@ -1,7 +1,7 @@
 <?php
 if(isset($_GET['matExclFunc'])) {
 require '../database/conne.php';
-$sqlFuncDel = "SELECT COUNT(*) FROM folhapagamento";
+$sqlFuncDel = "SELECT COUNT(idfolhapagamento) FROM folhapagamento";
 $resultadoFuncDel = $conn->prepare($sqlFuncDel);
 $resultadoFuncDel->execute();
 $funcionarioPagar = $resultadoFuncDel->fetchColumn();

@@ -24,7 +24,7 @@
     $sql = "SELECT * FROM usuario";
     $resultado = $conn->prepare($sql);
     $resultado->execute();
-    $usuario = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    $usuario = $resultado->fetchAll();
     if (isset($_GET['sair'])) {
     ?>
         <script>
@@ -50,7 +50,7 @@
     <?php
     }
     if (isset($_GET['idExcUsuPerg'])) {
-        $nomeUsu = $_GET['nome_modal'];
+        $nomeUsu = $_GET['nomeModal'];
         $idmod = $_GET['idExcUsuPerg'];
     ?>
         <script>
@@ -93,14 +93,21 @@
                                 echo "<div class='container'>
                         <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
                             Preencha todos os campos
-                            <a href='index.php?nomeEditar=$nomemod&senhaEditar=$senhamod&idEditar=$idEditar' class='btn btn-close'></a>
+                            <a href='index.php?nomeEditar=". $_GET['nomeEditar'] ."&senhaEditar=". $_GET['senhaEditar'] ."&idEditar=". $_GET['idEditar'] ."' class='btn btn-close'></a>
                         </div>
                     </div>";
-                            } 
+                            } if (isset($_GET["usuexis"])) {
+                                echo "<div class='container'>
+                        <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                            Já existe usuário com esses dados
+                            <a href='index.php?nomeEditar=". $_GET['nomeEditar'] ."&senhaEditar=". $_GET['senhaEditar'] ."&idEditar=". $_GET['idEditar'] ."' class='btn btn-close'></a>
+                        </div>
+                    </div>";
+                            }
                             ?>
                 <div class="mb-3">
                     <div class="d-flex justify-content-start">
-                    <label for="usuario" class="form-label">Usuário</label>
+                    <label for="usuario" class="form-label">Usuário<span class="text-danger">*</span></label>
                     </div>
                     <input type="hidden" class="form-control" id="ideditar" name="ideditar" value="${idEditar}">
                     <input type="text" class="form-control" id="usuario" name="usuario" value="${nomeUsuEdi}" maxlength="15" required>
@@ -110,11 +117,11 @@
                 </div>
                 <div class="mb-3">
                     <div class="d-flex justify-content-start">
-                    <label for="senha" class="form-label">Senha</label>
+                    <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
                     </div>
-                    <input type="text" class="form-control" id="senha" name="senha" value="${senhaEditar}" maxlength="15" required>
+                    <input type="text" class="form-control" id="senha" name="senha" value="${senhaEditar}" maxlength="6" required>
                     <div class="d-flex justify-content-start">
-                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    <p class="fs-6 mb-0">Limite: 6 caracteres</p>
                     </div>
                 </div>
             `,
@@ -169,7 +176,7 @@
                             ?>
                 <div class="mb-3 d-flex flex-column justify-content-start">
                     <div class="d-flex justify-content-start">
-                    <label for="usuario" class="form-label">Usuário</label>
+                    <label for="usuario" class="form-label">Usuário<span class="text-danger">*</span></label>
                     </div>
                     <input type="text" class="form-control" id="usuario" name="usuario" maxlength="15" required>
                     <div class="d-flex justify-content-start">
@@ -178,11 +185,11 @@
                 </div>
                 <div class="mb-3">
                     <div class="d-flex justify-content-start">
-                    <label for="senha" class="form-label">Senha</label>
+                    <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
                     </div>
-                    <input type="text" class="form-control" id="senha" name="senha" maxlength="15" required>
+                    <input type="text" class="form-control" id="senha" name="senha" maxlength="6" required>
                     <div class="d-flex justify-content-start">
-                    <p class="fs-6 mb-0">Limite: 15 caracteres</p>
+                    <p class="fs-6 mb-0">Limite: 6 caracteres</p>
                     </div>
                 </div>
             `,
@@ -313,7 +320,7 @@
                             </li>
                         </ul>
                         <div class="modal fade" id="modalgerenciar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-md">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <div class="card-body">
@@ -338,16 +345,17 @@
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <?php
-                                                if (count($usuario) > 0) {
+                                                if (count($usuario) > 1 ) {
                                                 ?>
-                                                    <div class="table-responsive-lg">
-                                                        <table class="table table-bordered table-hover text-center table-lg">
+                                                    <div class="table-responsive w-100">
+                                                        <table class="table table-bordered table-hover text-center table-md ">
                                                             <thead>
                                                                 <th scope="col" id="1">id</th>
                                                                 <th scope="col" id="2">nome</th>
                                                                 <th scope="col" id="3">senha</th>
                                                                 <th class="w-fit-content" scope="col" id="4">ações</th>
                                                             </thead>
+                                                            
                                                             <tbody>
                                                                 <?php
                                                                 foreach ($usuario as $user) {
@@ -355,7 +363,7 @@
                                                                         echo "<tr>";
                                                                         echo "<td headers='1'>" . $user['idusuario'] . "</td>";
                                                                         echo "<td headers='2'>" . $user['nome'] . "</td>";
-                                                                        echo "<td headers='3'>" . $user['senha'] . "</td>";
+                                                                        echo "<td headers='3'> ". $user['senha'] ." </td>";
                                                                         echo "<td headers='4'>" . "<div class='botaos d-flex flex-row gap-1 justify-content-center'><form action='modalUsuario/modalEditar.php' method='get'> " .
                                                                             "<input type='hidden' name='senha' value='" . $user['senha'] . "'>" . "<input type='hidden' name='id' value='" . $user['idusuario'] . "'>" . "<input type='hidden' name='nome' value='" . $user['nome'] . "'>" . "<input type='submit' class='btn btn-warning' value='editar'></input>" . "</form>";
                                                                         echo "<form action='modalUsuario/modalExcluir.php' method='get'> " .

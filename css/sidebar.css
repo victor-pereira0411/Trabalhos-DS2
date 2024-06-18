@@ -64,3 +64,16 @@ hr.h-color {
 .limit {
   font-size: 7px;
 }
+@media (max-width: 410px) {
+  .table-responsive {
+      justify-content: start; /* Alinha a tabela à esquerda */
+  }
+
+  .botaos {
+      flex-wrap: wrap; /* Faz com que os botões quebrem a linha */
+  }
+
+  .botaos form {
+      margin-bottom: 5px; /* Espaçamento entre os botões */
+  }
+}

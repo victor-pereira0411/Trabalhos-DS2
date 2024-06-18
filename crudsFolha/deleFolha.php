@@ -6,7 +6,6 @@ if($_GET['apague']) {
     $resultadoFolha = $conn-> prepare($sqlFolha);
     $resultadoFolha ->execute();
     $folha = $resultadoFolha->fetchColumn();
-    var_dump($folha);
     if($folha !== 0 ){
     $sql = 'DELETE FROM folhapagamento';
     $resultado = $conn->prepare($sql);

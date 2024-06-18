@@ -1,3 +1,8 @@
 .funcad{
     background-color: green;
 }
+@media(max-width: 767px) {
+    .botaos {
+        flex-wrap: wrap;
+    }
+}

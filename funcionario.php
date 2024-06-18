@@ -7,13 +7,6 @@
     <title>Painel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <style>
-        @media(max-width: 767px) {
-            .botaos {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -22,7 +15,7 @@
     $sql = "SELECT * FROM funcionarios";
     $resultado = $conn->prepare($sql);
     $resultado->execute();
-    $funcionarios = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    $funcionarios = $resultado->fetchAll();
     require 'template/sidebar.php';
     if (isset($_GET['matModEditFunc'])) {
     ?>
@@ -33,16 +26,38 @@
                 var matModEditFunc = "<?php echo $_GET['matModEditFunc'] ?>";
 
                 Swal.fire({
-                    title: "Edite o usuário",
+                    title: "Edite o funcionário",
                     html: `
+                    <?php
+                    if (isset($_GET["dados"])) {
+                        echo "<div class='container'>
+                                <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                                    Preencha todos os campos
+                                    <a href='funcionario.php?nomeModEditFunc=" . $_GET['nomeModEditFunc'] . "&matModEditFunc=" . $_GET['matModEditFunc'] . "&ganhoMilhModEditFunc=" . $_GET['ganhoMilhModEditFunc'] . "' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                    } else if (isset($_GET['funcExiste'])) {
+                        $funExiste = $_GET['nomeFuncionario'];
+                        echo "<div class='container'>
+                                <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
+                                    Já possui funcionário com o nome $funExiste cadastrado!
+                                    <a href='funcionario.php?nomeModEditFunc=" . $_GET['nomeModEditFunc'] . "&matModEditFunc=" . $_GET['matModEditFunc'] . "&ganhoMilhModEditFunc=" . $_GET['ganhoMilhModEditFunc'] . "' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                    }
+                    ?> 
                     <div class="mb-3">
-                        <label for="usuario" class="form-label">Nome do funcionário</label>
+                        <div class= "d-flex justify-content-start">
+                        <label for="nomeModEditFunc" class="form-label">Nome do funcionário<span class="text-danger">*</span></label>
+                        </div>
                         <input type="hidden" class="form-control" id="matModEditFunc" name="matModEditFunc" value="${matModEditFunc}">
                         <input type="text" class="form-control" id="nomeModEditFunc" name="nomeModEditFunc" value="${nomeModEditFunc}">
                     </div>
                     <div class="mb-3">
-                        <label for="senha" class="form-label">Ganho por milheiro</label>
-                        <input type="text" class="form-control" id="ganhoMilhModEditFunc" name="ganhoMilhModEditFunc" value="${ganhoMilhModEditFunc}">
+                        <div class= "d-flex justify-content-start">
+                        <label for="ganhoMilhModEditFunc" class="form-label">Ganho por milheiro<span class="text-danger">*</span></label>
+                        </div>
+                        <input type="number" class="form-control" id="ganhoMilhModEditFunc" name="ganhoMilhModEditFunc" value="${ganhoMilhModEditFunc}">
                     </div>
                 `,
                     showCancelButton: true,
@@ -97,40 +112,73 @@
 
     <?php
     }
+    if (isset($_GET['cadastrarFunc'])) {
+    ?>
+        <script>
+            (function() {
+                Swal.fire({
+                    title: "Cadastrar funcionários",
+                    html: `<?php
+                            if (isset($_GET["dados"])) {
+                                echo "<div class='container'>
+                                <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                                    Preencha todos os campos
+                                    <a href='funcionario.php?cadastrarFunc=ok' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            } else if (isset($_GET['funExiste'])) {
+                                $funExiste = $_GET['nomeFunExiste'];
+                                echo "<div class='container'>
+                                <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
+                                    Já possui funcionário com o nome $funExiste cadastrado!
+                                    <a href='funcionario.php?cadastrarFunc=ok' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            }
+                            ?> 
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-start">
+                            <label for="nome" class="form-label">Nome do funcionário<span class="text-danger">*</span></label>
+                        </div>
+                        <input type="text" class="form-control" id="nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-start">
+                            <label for="ganhoMilheiro" class="form-label">Ganho por milheiro<span class="text-danger">*</span></label>
+                        </div>
+                        <input type="number" class="form-control" id="ganhoMilheiro" required>
+                    </div>`,
+                    showCancelButton: true,
+                    confirmButtonText: "Cadastrar",
+                    cancelButtonText: "Cancelar",
+                    showLoaderOnConfirm: true,
+                    reverseButtons: true,
+                    preConfirm: () => {
+                        const nomeFunc = document.getElementById('nome').value;
+                        const ganhoMilh = document.getElementById('ganhoMilheiro').value;
+                        return [nomeFunc, ganhoMilh];
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const [nomeFunc, ganhoMilh] = result.value;
+                        window.location.href = "crudFunc/cadFuncionario.php?nomeFunc=" + nomeFunc + "&ganhoMilheiro=" + ganhoMilh;
+                    } else {
+                        window.location.href = "funcionario.php";
+                    }
+                });
+            })();
+        </script>
+    <?php
+    }
     ?>
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between flex-column">
             <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
                 <h2>Funcionários</h2>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                    adicionar
-                </button>
-                <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastrar funcionário</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="needs-validation" action="crudFunc/cadFuncionario.php" method="post">
-                                    <div class="mb-3">
-                                        <label for="text" class="form-label">Nome do funcionário</label>
-                                        <input type="text" class="form-control" id="nomfunc" name="nomfunc" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="int" class="form-label">Ganho por milheiro</label>
-                                        <input type="int" class="form-control" id="ganho" name="ganhoFunc" required>
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary" name="btnfunc">Cadastrar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <form action="modalFunc/modalCadastrar.php" method="get">
+                    <input class="btn btn-primary" type="submit" name="cadastrar" value="adicionar">
+                </form>
             </div>
 
             <div>
@@ -180,23 +228,12 @@
                     </div>
 
                 <?php
-                } else if (isset($_GET['funExiste'])) {
-                    $funExiste = $_GET['nomeFunExiste'];
-                ?>
-
-                    <div class="container">
-                        <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
-                            já possui funcionário com o nome <?php echo $funExiste ?> cadastrado!
-                            <a href="funcionario.php" class="btn btn-close"></a>
-                        </div>
-                    </div>
-
-                <?php
                 }
                 ?>
 
             </div>
         </div>
+
         <?php
         if (count($funcionarios) > 0) {
         ?>

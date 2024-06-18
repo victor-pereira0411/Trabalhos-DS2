@@ -54,15 +54,36 @@
 
                 Swal.fire({
                     title: "Altere a produção",
-                    html: `
+                    html: `<?php
+                            if (isset($_GET["dados"])) {
+                                echo "<div class='container'>
+                                <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                                    Preencha todos os campos
+                                    <a href='produca.php?dataProducao=" . $_GET['dataProducao'] . "&idProducaoEdi=" . $_GET['idProducaoEdi'] . "&milheirosProduzidos=" . $_GET['milheirosProduzidos'] . "' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            } else if (isset($_GET['dataExistente'])) {
+                                $dataExistente = $_GET['dataExistente'];
+                                echo "<div class='container'>
+                                <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
+                                    Já possui produção com a data de $dataExistente cadastrada!
+                                    <a href='produca.php?dataProducao=" . $_GET['dataProducao'] . "&idProducaoEdi=" . $_GET['idProducaoEdi'] . "&milheirosProduzidos=" . $_GET['milheirosProduzidos'] . "' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            }
+                            ?>
                     <div class="mb-3">
-                        <label class="form-label">Data da produção</label>
+                        <div class="d-flex justify-content-start">
+                        <label class="form-label">Data da produção<span class="text-danger">*</span></label>
+                        </div>
                         <input type="hidden" class="form-control" id="idProducaoEdi" value="${idProducaoEdi}">
-                        <input type="text" class="form-control" id="dataProducao" value="${dataProducao}">
+                        <input type="date" class="form-control" id="dataProducao" value="${dataProducao}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Milheiros produzidos</label>
-                        <input type="text" class="form-control" id="milheirosProduzidos" value="${milheirosProduzidos}">
+                    <div class="d-flex justify-content-start">
+                        <label class="form-label">Milheiros produzidos<span class="text-danger">*</span></label>
+                        </div>
+                        <input type="number" class="form-control" id="milheirosProduzidos" value="${milheirosProduzidos}">
                     </div>
                 `,
                     showCancelButton: true,
@@ -115,6 +136,66 @@
         </script>
     <?php
     }
+    if (isset($_GET['cadastrarProd'])) {
+    ?>
+        <script>
+            (function() {
+                Swal.fire({
+                    title: "Cadastre produções",
+                    html: `<?php
+                            if (isset($_GET["dados"])) {
+                                echo "<div class='container'>
+                                <div class='alert alert-danger alert-dismissible fade show fs-6' role='alert'>
+                                    Preencha todos os campos
+                                    <a href='produca.php?cadastrarProd=ok' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            } else if (isset($_GET['dataProducao'])) {
+                                $dataProducao = $_GET['dataProducao'];
+                                echo "<div class='container'>
+                                <div class='alert alert-warning alert-dismissible fade show fs-6' role='alert'>
+                                    Já possui produção com a data de $dataProducao cadastrada!
+                                    <a href='produca.php?cadastrarProd=ok' class='btn btn-close'></a>
+                                </div>
+                            </div>";
+                            }
+                            ?>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-start">
+                            <label for="dataProducao" class="form-label">Data da produção<span class="text-danger">*</span></label>
+                            </div>
+                            <input type="date" class="form-control" id="dataProducao">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-start">
+                            <label for="milheirosProduzidos" class="form-label">Milheiros produzidos<span class="text-danger">*</span></label>
+                            </div>
+                            <input type="number" class="form-control" id="milheirosProduzidos">
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: "Cadastrar",
+                    cancelButtonText: "Cancelar",
+                    showLoaderOnConfirm: true,
+                    confirmButtonColor: "#0d6efd",
+                    reverseButtons: true,
+                    preConfirm: () => {
+                        const dataProducao = document.getElementById('dataProducao').value;
+                        const milheirosProduzidos = document.getElementById('milheirosProduzidos').value;
+                        return [dataProducao, milheirosProduzidos];
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const [ dataProducao, milheirosProduzidos] = result.value;
+                        window.location.href = "crudsProd/cadProd.php?datProd=" + dataProducao + "&milhProd=" + milheirosProduzidos;
+                    } else {
+                        window.location.href = "produca.php";
+                    }
+                });
+            })();
+        </script>
+    <?php
+    }
     ?>
     <div class="dashboard-content px-3 pt-4">
         <div class="fs-4 m-2 mt-1 d-flex justify-content-between ">
@@ -126,35 +207,9 @@
                             Finalizar produção
                         </button>
                     </form>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcadastrar">
-                        adicionar
-                    </button>
-                </div>
-            </div>
-            <div class="modal fade" id="modalcadastrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar produção</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="needs-validation" action="crudsProd/cadProd.php" method="post">
-                                <div class="mb-3">
-                                    <label for="text" class="form-label">Data Produzida</label>
-                                    <input type="DATE" class="form-control" id="datProd" name="datProd" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="int" class="form-label">Milheiros produzidos</label>
-                                    <input type="int" class="form-control" id="milhProd" name="milhProd" required>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" name="btnfunc">Cadastrar</button>
-                            </form>
-                        </div>
-                    </div>
+                    <form action="modalProd/modalCadastrar.php" method="get">
+                        <input class="btn btn-primary" type="submit" name="cadastrar" value="adicionar">
+                    </form>
                 </div>
             </div>
         </div>
@@ -163,7 +218,7 @@
         <div>
             <?php
             if (isset($_GET['prodCad'])) {
-                $dataProd = $_GET['data_producao'];
+                $dataProd = $_GET['dataProducao'];
             ?>
                 <div class="container">
                     <div class='alert alert-success alert-dismissible fade show' role='alert'>
